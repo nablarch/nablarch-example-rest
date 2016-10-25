@@ -248,7 +248,7 @@ public class ProjectForm implements Serializable {
      * @param projectStartDate プロジェクト開始日
      */
     public void setProjectStartDate(String projectStartDate) {
-        this.projectStartDate = projectStartDate == null ? null : projectStartDate.replace("/", "");
+        this.projectStartDate = projectStartDate;
     }
 
     /**
@@ -257,7 +257,7 @@ public class ProjectForm implements Serializable {
      * @param projectEndDate プロジェクト終了日
      */
     public void setProjectEndDate(String projectEndDate) {
-        this.projectEndDate = projectEndDate == null ? null : projectEndDate.replace("/", "");
+        this.projectEndDate = projectEndDate;
     }
 
 
