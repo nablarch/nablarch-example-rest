@@ -35,7 +35,6 @@ Gitを使用しない場合、最新のタグからzipをダウンロードし�
 次に、データベースのセットアップ及びアプリケーションのビルドを行います。以下のコマンドを実行してください。
 
     $cd nablarch-example-rest
-    $mvn -P gsp generate-resources
     $mvn compile
 
 ### 4  アプリケーションの起動
