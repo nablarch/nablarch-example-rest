@@ -9,10 +9,13 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 
 import com.nablarch.example.entity.Project;
+import nablarch.core.beans.BeanUtil;
+import nablarch.core.util.DateUtil;
 
 public class ProjectClient {
 
@@ -36,7 +39,14 @@ public class ProjectClient {
         System.out.print(makeDataString(getProjects()));
 
         // 更新対象プロジェクト取得
-        Project updateProject = getProjects("projectName", "プロジェクト９９９").get(0);
+        ProjectResponseDto projectResponseDto = getProjects("projectName", "プロジェクト９９９").get(0);
+        Project updateProject = BeanUtil.createAndCopy(Project.class, projectResponseDto);
+        if(projectResponseDto.getProjectStartDateString() != null){
+            updateProject.setProjectStartDate(DateUtil.getParsedDate(projectResponseDto.getProjectStartDateString(),"yyyy/MM/dd"));
+        }
+        if(projectResponseDto.getProjectEndDateString() != null){
+            updateProject.setProjectEndDate(DateUtil.getParsedDate(projectResponseDto.getProjectEndDateString(),"yyyy/MM/dd"));
+        }
         ProjectUpdateForm updateForm = setUpdateProject(updateProject);
 
         // 更新
@@ -94,11 +104,11 @@ public class ProjectClient {
      * HTTP GETメソッドを使用したクライアント操作を行う。
      * @return プロジェクト情報リスト
      */
-    private static List<Project> getProjects() {
+    private static List<ProjectResponseDto> getProjects() {
         return ClientBuilder.newClient()
                 .target(targetUrl)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<Project>>() {});
+                .get(new GenericType<List<ProjectResponseDto>>() {});
     }
 
     /**
@@ -107,13 +117,13 @@ public class ProjectClient {
      * @param value query paramの値
      * @return プロジェクト情報リスト
      */
-    private static List<Project> getProjects(String key, Object value) throws UnsupportedEncodingException {
+    private static List<ProjectResponseDto> getProjects(String key, Object value) throws UnsupportedEncodingException {
 
         return ClientBuilder.newClient()
                             .target(targetUrl)
                             .queryParam(key, value)
                             .request(MediaType.APPLICATION_JSON)
-                            .get(new GenericType<List<Project>>() {});
+                            .get(new GenericType<List<ProjectResponseDto>>() {});
     }
 
     /**
@@ -146,16 +156,16 @@ public class ProjectClient {
      * @param projects プロジェクト情報List
      * @return プロジェクト情報
      */
-    private static String makeDataString(List<Project> projects) {
+    private static String makeDataString(List<ProjectResponseDto> projects) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("---- projects (size: %s) ----", projects.size())).append('\n');
-        for (Project project : projects) {
+        for (ProjectResponseDto project : projects) {
             sb.append(String.format("Project(ProjectId: %s, ProjectName: %s, ProjectType: %s, ProjectClass: %s, "
                     + "ProjectStartDate: %s, ProjectEndDate: %s, ClientId: %s, ProjectManager: %s, ProjectLeader: %s, "
                     + "UserId: %s, Note: %s, Sales: %s, CostOfGoodsSold: %s, Sga: %s, AllocationOfCorpExpenses: %s, "
                     + "Client: %s, SystemAccount: %s)",
                     project.getProjectId(), project.getProjectName(), project.getProjectType(),
-                    project.getProjectClass(), project.getProjectStartDate(), project.getProjectEndDate(),
+                    project.getProjectClass(), project.getProjectStartDateString(), project.getProjectEndDateString(),
                     project.getClientId(), project.getProjectManager(), project.getProjectLeader(),
                     project.getUserId(), project.getNote(), project.getSales(), project.getCostOfGoodsSold(),
                     project.getSga(), project.getAllocationOfCorpExpenses(), project.getClient(),

@@ -5,7 +5,9 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.form.ProjectUpdateForm;
+import nablarch.common.dao.EntityList;
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
 import nablarch.core.validation.ee.ValidatorUtil;
@@ -17,6 +19,7 @@ import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectSearchForm;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +36,7 @@ public class ProjectAction {
      * @return プロジェクト情報リスト
      */
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Project> find(HttpRequest req) {
+    public List<ProjectResponseDto> find(HttpRequest req) {
 
         // リクエストパラメータをBeanに変換
         ProjectSearchForm form = BeanUtil.createAndCopy(ProjectSearchForm.class, req.getParamMap());
@@ -42,7 +45,14 @@ public class ProjectAction {
         ValidatorUtil.validate(form);
 
         ProjectSearchDto searchCondition = BeanUtil.createAndCopy(ProjectSearchDto.class, form);
-        return UniversalDao.findAllBySqlFile(Project.class, "FIND_PROJECT", searchCondition);
+        EntityList<Project> projectList = UniversalDao.findAllBySqlFile(Project.class, "FIND_PROJECT", searchCondition);
+
+        List<ProjectResponseDto> projectResponseDtoList = new ArrayList<>();
+        for (Project project : projectList) {
+            ProjectResponseDto dto = BeanUtil.createAndCopy(ProjectResponseDto.class, project);
+            projectResponseDtoList.add(dto);
+        }
+        return projectResponseDtoList;
     }
 
     /**
