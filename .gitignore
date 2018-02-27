@@ -69,14 +69,8 @@ gsp-target
 h2
 
 ### JetBrains template
-.idea/dataSources/
-.idea/*.ids
-.idea/*.xml
-.idea/artifacts
-.idea/copyright
-!.idea/misc.xml
-!.idea/modules.xml
-!.idea/dictionaries
+.idea/
+*.iml
 
 
 ## File-based project format:
