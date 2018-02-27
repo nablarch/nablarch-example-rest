@@ -84,7 +84,7 @@ public class ProjectClient {
     private static ProjectUpdateForm setUpdateProject(Project project) {
         ProjectUpdateForm form = new ProjectUpdateForm();
         form.setProjectId(project.getProjectId().toString());
-        //form.setProjectName("しおしお");
+        form.setProjectName("プロジェクト８８８");
         form.setProjectType("development");
         form.setProjectClass("a");
         form.setProjectStartDate("20150101");
