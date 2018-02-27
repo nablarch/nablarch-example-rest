@@ -1,14 +1,13 @@
 package com.nablarch.example.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nablarch.example.entity.Client;
-import com.nablarch.example.entity.SystemAccount;
-import nablarch.core.text.FormatterUtil;
-import nablarch.core.util.DateUtil;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import com.nablarch.example.entity.Client;
+import com.nablarch.example.entity.SystemAccount;
+import com.nablarch.example.jackson.DateSerializer;
 
 /**
  * プロジェクト
@@ -140,7 +139,7 @@ public class ProjectResponseDto implements Serializable {
      *
      * @return プロジェクト開始日付
      */
-    @JsonIgnore
+    @JsonSerialize(using = DateSerializer.class)
     public Date getProjectStartDate() {
         return projectStartDate;
     }
@@ -155,38 +154,11 @@ public class ProjectResponseDto implements Serializable {
     }
 
     /**
-     * 文字列に変換したプロジェクト開始日付を返します。
-     *
-     * @return プロジェクト開始日付（文字列）
-     */
-    @JsonProperty("projectStartDate")
-    public String getProjectStartDateString() {
-        String ret = null;
-        if (projectStartDate != null) {
-            ret = FormatterUtil.format("dateTime", projectStartDate);
-        }
-        return ret;
-    }
-
-    /**
-     * 文字列でプロジェクト開始日付を設定します。
-     *
-     * @param projectStartDate プロジェクト開始日付（文字列）
-     */
-    public void setProjectStartDateString(String projectStartDate) {
-        if(projectStartDate != null){
-            this.projectStartDate = DateUtil.getParsedDate(projectStartDate,"yyyy/MM/dd");
-        }else {
-            this.projectStartDate = null;
-        }
-    }
-
-    /**
      * プロジェクト終了日付を返します。
      *
      * @return プロジェクト終了日付
      */
-    @JsonIgnore
+    @JsonSerialize(using = DateSerializer.class)
     public Date getProjectEndDate() {
         return projectEndDate;
     }
@@ -199,34 +171,6 @@ public class ProjectResponseDto implements Serializable {
     public void setProjectEndDate(Date projectEndDate) {
         this.projectEndDate = projectEndDate;
     }
-
-    /**
-     * 文字列に変換したプロジェクト終了日付を返します。
-     *
-     * @return プロジェクト終了日付（文字列）
-     */
-    @JsonProperty("projectEndDate")
-    public String getProjectEndDateString() {
-        String ret = null;
-        if (projectEndDate != null) {
-            ret = FormatterUtil.format("dateTime", projectEndDate);
-        }
-        return ret;
-    }
-
-    /**
-     * 文字列でプロジェクト終了日付を設定します。
-     *
-     * @param projectEndDate プロジェクト終了日付（文字列）
-     */
-    public void setProjectEndDateString(String projectEndDate) {
-        if(projectEndDate != null){
-            this.projectEndDate = DateUtil.getParsedDate(projectEndDate,"yyyy/MM/dd");
-        }else {
-            this.projectEndDate = null;
-        }
-    }
-
 
     /**
      * 顧客IDを返します。

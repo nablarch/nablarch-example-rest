@@ -1,21 +1,22 @@
 package com.nablarch.example.client;
 
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 
+import nablarch.core.beans.BeanUtil;
+import nablarch.core.beans.CopyOptions;
+
 import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 
 import com.nablarch.example.entity.Project;
-import nablarch.core.beans.BeanUtil;
-import nablarch.core.util.DateUtil;
 
 public class ProjectClient {
 
@@ -29,29 +30,28 @@ public class ProjectClient {
 
         // 検索
         // 全件検索
-        System.out.print(makeDataString(getProjects()));
+        System.out.print(getProjects());
         // 指定条件検索
-        System.out.print(makeDataString(getProjects("clientId", 1)));
+        System.out.print(getProjects("clientId", 1));
 
         // 登録
         ProjectForm project = createInsertProject();
         System.out.println("insert status:" + postProject(project));
-        System.out.print(makeDataString(getProjects()));
+        System.out.println(getProjects());
 
         // 更新対象プロジェクト取得
-        ProjectResponseDto projectResponseDto = getProjects("projectName", "プロジェクト９９９").get(0);
-        Project updateProject = BeanUtil.createAndCopy(Project.class, projectResponseDto);
-        if(projectResponseDto.getProjectStartDateString() != null){
-            updateProject.setProjectStartDate(DateUtil.getParsedDate(projectResponseDto.getProjectStartDateString(),"yyyy/MM/dd"));
-        }
-        if(projectResponseDto.getProjectEndDateString() != null){
-            updateProject.setProjectEndDate(DateUtil.getParsedDate(projectResponseDto.getProjectEndDateString(),"yyyy/MM/dd"));
-        }
+        Map<String, String> updateTargetProject = getProjects("projectName", "プロジェクト９９９").get(0);
+        final CopyOptions copyOptions = CopyOptions.options()
+                                                   .datePatternByName("projectStartDate", "yyyy/MM/dd")
+                                                   .datePatternByName("projectEndDate", "yyyy/MM/dd")
+                                                   .build();
+
+        Project updateProject = BeanUtil.createAndCopy(Project.class, updateTargetProject, copyOptions);
         ProjectUpdateForm updateForm = setUpdateProject(updateProject);
 
         // 更新
         System.out.println("update status:" + putProject(updateForm, updateProject.getProjectId()));
-        System.out.print(makeDataString(getProjects()));
+        System.out.println(getProjects());
     }
 
     /**
@@ -84,7 +84,7 @@ public class ProjectClient {
     private static ProjectUpdateForm setUpdateProject(Project project) {
         ProjectUpdateForm form = new ProjectUpdateForm();
         form.setProjectId(project.getProjectId().toString());
-        form.setProjectName("プロジェクト８８８");
+        //form.setProjectName("しおしお");
         form.setProjectType("development");
         form.setProjectClass("a");
         form.setProjectStartDate("20150101");
@@ -104,11 +104,11 @@ public class ProjectClient {
      * HTTP GETメソッドを使用したクライアント操作を行う。
      * @return プロジェクト情報リスト
      */
-    private static List<ProjectResponseDto> getProjects() {
+    private static List<Map<String, String>> getProjects() {
         return ClientBuilder.newClient()
                 .target(targetUrl)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<ProjectResponseDto>>() {});
+                .get(new GenericType<List<Map<String, String>>>() {});
     }
 
     /**
@@ -117,13 +117,13 @@ public class ProjectClient {
      * @param value query paramの値
      * @return プロジェクト情報リスト
      */
-    private static List<ProjectResponseDto> getProjects(String key, Object value) throws UnsupportedEncodingException {
+    private static List<Map<String, String>> getProjects(String key, Object value) throws UnsupportedEncodingException {
 
         return ClientBuilder.newClient()
                             .target(targetUrl)
                             .queryParam(key, value)
                             .request(MediaType.APPLICATION_JSON)
-                            .get(new GenericType<List<ProjectResponseDto>>() {});
+                            .get(new GenericType<List<Map<String, String>>>() {});
     }
 
     /**
@@ -165,7 +165,7 @@ public class ProjectClient {
                     + "UserId: %s, Note: %s, Sales: %s, CostOfGoodsSold: %s, Sga: %s, AllocationOfCorpExpenses: %s, "
                     + "Client: %s, SystemAccount: %s)",
                     project.getProjectId(), project.getProjectName(), project.getProjectType(),
-                    project.getProjectClass(), project.getProjectStartDateString(), project.getProjectEndDateString(),
+                    project.getProjectClass(), project.getProjectStartDate(), project.getProjectEndDate(),
                     project.getClientId(), project.getProjectManager(), project.getProjectLeader(),
                     project.getUserId(), project.getNote(), project.getSales(), project.getCostOfGoodsSold(),
                     project.getSga(), project.getAllocationOfCorpExpenses(), project.getClient(),
