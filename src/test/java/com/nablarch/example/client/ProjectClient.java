@@ -12,7 +12,6 @@ import javax.ws.rs.core.MediaType;
 import nablarch.core.beans.BeanUtil;
 import nablarch.core.beans.CopyOptions;
 
-import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.form.ProjectForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 
@@ -30,14 +29,14 @@ public class ProjectClient {
 
         // 検索
         // 全件検索
-        System.out.print(getProjects());
+        System.out.print(makeDataString(getProjects()));
         // 指定条件検索
-        System.out.print(getProjects("clientId", 1));
+        System.out.print(makeDataString(getProjects("clientId", 1)));
 
         // 登録
         ProjectForm project = createInsertProject();
         System.out.println("insert status:" + postProject(project));
-        System.out.println(getProjects());
+        System.out.print(makeDataString(getProjects()));
 
         // 更新対象プロジェクト取得
         Map<String, String> updateTargetProject = getProjects("projectName", "プロジェクト９９９").get(0);
@@ -51,7 +50,7 @@ public class ProjectClient {
 
         // 更新
         System.out.println("update status:" + putProject(updateForm, updateProject.getProjectId()));
-        System.out.println(getProjects());
+        System.out.print(makeDataString(getProjects()));
     }
 
     /**
@@ -156,21 +155,18 @@ public class ProjectClient {
      * @param projects プロジェクト情報List
      * @return プロジェクト情報
      */
-    private static String makeDataString(List<ProjectResponseDto> projects) {
+    private static StringBuilder makeDataString(List<Map<String, String>> projects) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("---- projects (size: %s) ----", projects.size())).append('\n');
-        for (ProjectResponseDto project : projects) {
-            sb.append(String.format("Project(ProjectId: %s, ProjectName: %s, ProjectType: %s, ProjectClass: %s, "
-                    + "ProjectStartDate: %s, ProjectEndDate: %s, ClientId: %s, ProjectManager: %s, ProjectLeader: %s, "
-                    + "UserId: %s, Note: %s, Sales: %s, CostOfGoodsSold: %s, Sga: %s, AllocationOfCorpExpenses: %s, "
-                    + "Client: %s, SystemAccount: %s)",
-                    project.getProjectId(), project.getProjectName(), project.getProjectType(),
-                    project.getProjectClass(), project.getProjectStartDate(), project.getProjectEndDate(),
-                    project.getClientId(), project.getProjectManager(), project.getProjectLeader(),
-                    project.getUserId(), project.getNote(), project.getSales(), project.getCostOfGoodsSold(),
-                    project.getSga(), project.getAllocationOfCorpExpenses(), project.getClient(),
-                    project.getSystemAccount())).append('\n');
+        for (Map<String, String> project : projects) {
+            sb.append("Project(");
+            for (String key : project.keySet()) {
+                sb.append(key + ": ");
+                sb.append(project.get(key) + ", ");
+            }
+            sb.delete(sb.length() - 2, sb.length());
+            sb.append(")\n");
         }
-        return sb.toString();
+        return sb;
     }
 }
