@@ -155,18 +155,12 @@ public class ProjectClient {
      * @param projects プロジェクト情報List
      * @return プロジェクト情報
      */
-    private static StringBuilder makeDataString(List<Map<String, String>> projects) {
+    private static String makeDataString(List<Map<String, String>> projects) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("---- projects (size: %s) ----", projects.size())).append('\n');
+        sb.append(String.format("---- projects (size: %s) ----", projects.size())).append(System.lineSeparator());
         for (Map<String, String> project : projects) {
-            sb.append("Project(");
-            for (String key : project.keySet()) {
-                sb.append(key + ": ");
-                sb.append(project.get(key) + ", ");
-            }
-            sb.delete(sb.length() - 2, sb.length());
-            sb.append(")\n");
+            sb.append("Project(").append(project).append(")").append(System.lineSeparator());
         }
-        return sb;
+        return sb.toString();
     }
 }
