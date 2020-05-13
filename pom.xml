@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.nablarch.example</groupId>
@@ -13,10 +14,10 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
+
     <db.adminUser>REST_EXAMPLE</db.adminUser>
     <db.user>REST_EXAMPLE</db.user>
-    
+
   </properties>
 
   <profiles>
@@ -52,8 +53,18 @@
     </dependency>
 
     <dependency>
+      <groupId>com.nablarch.configuration</groupId>
+      <artifactId>nablarch-testing-default-configuration</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-testing</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.nablarch.framework</groupId>
+      <artifactId>nablarch-testing-jetty6</artifactId>
       <scope>test</scope>
     </dependency>
 
@@ -71,13 +82,13 @@
       <groupId>com.nablarch.integration</groupId>
       <artifactId>nablarch-router-adaptor</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>com.nablarch.integration</groupId>
       <artifactId>nablarch-jackson-adaptor</artifactId>
       <scope>runtime</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-core-validation-ee</artifactId>
@@ -97,14 +108,14 @@
       <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-common-dao</artifactId>
     </dependency>
-    
+
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>1.4.196</version>
       <scope>runtime</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>com.zaxxer</groupId>
       <artifactId>HikariCP</artifactId>
@@ -164,21 +175,21 @@
         <artifactId>gsp-dba-maven-plugin</artifactId>
         <configuration>
           <erdFile>src/main/resources/entity/data-model.edm</erdFile>
-          
+
           <driver>org.h2.Driver</driver>
           <url>jdbc:h2:./h2/db/rest_example</url>
-          
+
           <adminUser>${db.adminUser}</adminUser>
           <adminPassword>${db.adminUser}</adminPassword>
           <user>${db.user}</user>
           <password>${db.user}</password>
           <schema>PUBLIC</schema>
-          
+
           <rootPackage>com.nablarch.example</rootPackage>
           <entityPackageName>entity</entityPackageName>
           <useAccessor>true</useAccessor>
           <javaFileDestDir>${project.build.directory}/generated-sources/entity</javaFileDestDir>
-          
+
           <dataDirectory>src/test/resources/data</dataDirectory>
         </configuration>
         <dependencies>
