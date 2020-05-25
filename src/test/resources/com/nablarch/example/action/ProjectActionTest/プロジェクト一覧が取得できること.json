@@ -14,7 +14,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -52,7 +52,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -71,7 +71,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -90,7 +90,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -109,7 +109,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -128,7 +128,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -147,7 +147,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -166,7 +166,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   },
@@ -185,7 +185,7 @@
     "sales": 10000,
     "costOfGoodsSold": 1000,
     "sga": 2000,
-    "allocationOfCorpExpenses": null,
+    "allocationOfCorpExpenses": 3000,
     "client": null,
     "systemAccount": null
   }

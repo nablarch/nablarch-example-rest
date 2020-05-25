@@ -31,7 +31,6 @@
     <!-- Htmlチェックツールを実行するか否かの設定 -->
     <property name="checkHtml" value="false"/>
     <property name="tempDirectory" value="${nablarch.httpTestConfiguration.tempDirectory}"/>
-    <property name="shouldSetUpDb" value="true"/>
   </component>
 
   <component name="restMockHttpRequestBuilder" class="nablarch.fw.web.RestMockHttpRequestBuilder">
