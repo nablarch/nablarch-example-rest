@@ -10,7 +10,7 @@
   <!-- テスティングフレームワークの設定 -->
   <import file="nablarch/test/test-data.xml"/>
   <import file="nablarch/test/test-transaction.xml"/>
-  <!--  <import file="nablarch/test/http-request-test.xml"/>-->
+  <import file="nablarch/test/rest-request-test.xml"/>
   <import file="nablarch/core/date_test.xml"/>
 
   <!-- DBの接続設定を定義する -->
@@ -21,26 +21,5 @@
 
   <!-- テスト用HttpServerにJetty6を定義する -->
   <component name="httpServerFactory" class="nablarch.fw.web.httpserver.HttpServerFactoryJetty6"/>
-
-  <!-- 環境設定ファイルの読み込み -->
-  <config-file file="nablarch/test/http-request-test/http-request-test.config"/>
-
-  <component name="restTestConfiguration"
-             class="nablarch.test.core.http.RestTestConfiguration">
-    <property name="webBaseDir" value="${nablarch.httpTestConfiguration.webBaseDir}"/>
-    <!-- Htmlチェックツールを実行するか否かの設定 -->
-    <property name="checkHtml" value="false"/>
-    <property name="tempDirectory" value="${nablarch.httpTestConfiguration.tempDirectory}"/>
-  </component>
-
-  <component name="restMockHttpRequestBuilder" class="nablarch.fw.web.RestMockHttpRequestBuilder">
-    <property name="defaultContentType" value="application/json"/>
-    <property name="httpBodyWriters">
-      <list>
-        <component class="nablarch.fw.web.JacksonHttpBodyWriter"/>
-        <component class="nablarch.fw.web.StringHttpBodyWriter"/>
-      </list>
-    </property>
-  </component>
 
 </component-configuration>

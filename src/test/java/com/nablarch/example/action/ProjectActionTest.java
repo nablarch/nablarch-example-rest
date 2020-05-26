@@ -1,6 +1,5 @@
 package com.nablarch.example.action;
 
-import com.jayway.jsonassert.JsonAsserter;
 import com.jayway.jsonpath.JsonPath;
 import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
@@ -9,21 +8,22 @@ import nablarch.core.beans.BeanUtil;
 import nablarch.fw.web.HttpResponse;
 import nablarch.fw.web.RestMockHttpRequestBuilder;
 import nablarch.test.core.http.RestTestSupport;
+import org.json.JSONException;
 import org.junit.Test;
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Map;
 
 import static com.jayway.jsonassert.JsonAssert.with;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
+import static nablarch.test.Assertion.fail;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasEntry;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
@@ -37,24 +37,12 @@ public class ProjectActionTest extends RestTestSupport {
         assertStatusCode(message, HttpResponse.Status.OK.getStatusCode(), response);
 
         assertThat(response.getBodyString(), hasJsonPath("$", hasSize(10)));
-        // JSONファイルとのアサート。ファイル名を省略するとテストメソッド名と同名ファイルを検索する。
-        assertJsonEquals(message, response);
-
-        with(response.getBodyString())
-                .assertThat("$", hasSize(10))
-                .assertThat("$", hasItems(
-                        hasEntry("projectId", 1)
-                        , hasEntry("projectId", 2)
-                        , hasEntry("projectId", 3)
-                        , hasEntry("projectId", 4)
-                        , hasEntry("projectId", 5)
-                        , hasEntry("projectId", 6)
-                        , hasEntry("projectId", 7)
-                        , hasEntry("projectId", 8)
-                        , hasEntry("projectId", 9)
-                        , hasEntry("projectId", 10)
-                        )
-                );
+        try {
+            JSONAssert.assertEquals(message, readTextResource("プロジェクト一覧が取得できること.json")
+                    , response.getBodyString(), JSONCompareMode.LENIENT);
+        } catch (JSONException e) {
+            fail(e.getMessage());
+        }
     }
 
     @Test
@@ -78,6 +66,8 @@ public class ProjectActionTest extends RestTestSupport {
         HttpResponse afterRegisterResponse = sendRequest(builder.get("/projects"));
         assertStatusCode(message3, HttpResponse.Status.OK.getStatusCode(), afterRegisterResponse);
         assertProjectEquals(BeanUtil.createAndCopy(Project.class, projectForm), afterRegisterResponse);
+
+        assertTableEquals("プロジェクトを新規登録できること");
     }
 
     @Test
@@ -91,12 +81,12 @@ public class ProjectActionTest extends RestTestSupport {
         String message1 = "変更前に変更しようとするプロジェクト名に一致するデータが存在しないこと";
         HttpResponse projectNameNotFoundResponse = sendRequest(builder.get(project888Uri));
         assertStatusCode(message1, HttpResponse.Status.OK.getStatusCode(), projectNameNotFoundResponse);
-        assertThat(projectNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
+        assertThat(message1, projectNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
 
         String message2 = "変更対象取得";
         HttpResponse getTargetProjectResponse = sendRequest(builder.get(project001Uri));
         assertStatusCode(message2, HttpResponse.Status.OK.getStatusCode(), getTargetProjectResponse);
-        assertThat(getTargetProjectResponse.getBodyString(), isJson(allOf(
+        assertThat(message2, getTargetProjectResponse.getBodyString(), isJson(allOf(
                 withJsonPath("$", hasSize(1))
                 , withJsonPath("$[0]", hasEntry("projectName", "プロジェクト００１")))));
 
@@ -110,13 +100,11 @@ public class ProjectActionTest extends RestTestSupport {
         String message4 = "変更前のプロジェクト名に一致するデータが存在しないこと";
         HttpResponse previousNameNotFoundResponse = sendRequest(builder.get(project001Uri));
         assertStatusCode(message4, HttpResponse.Status.OK.getStatusCode(), previousNameNotFoundResponse);
-        assertThat(previousNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
+        assertThat(message4, previousNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
 
         String message5 = "取得したプロジェクトが変更した内容と一致すること";
         HttpResponse projectNameFoundResponse = sendRequest(builder.get(project888Uri));
         assertStatusCode(message5, HttpResponse.Status.OK.getStatusCode(), projectNameFoundResponse);
-        // JSONファイルを読み込んでアサートする
-        assertJsonEquals(message5, "プロジェクト８８８.json", projectNameFoundResponse);
         // Projectとのアサート
         assertProjectEquals(BeanUtil.createAndCopy(Project.class, updateForm), projectNameFoundResponse);
     }
@@ -124,26 +112,7 @@ public class ProjectActionTest extends RestTestSupport {
 
     private void assertProjectEquals(Project expected, HttpResponse response) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-
-        assertThat(response.getBodyString(), isJson(allOf(
-                withJsonPath("$", hasSize(1))
-                , withJsonPath("$[0].projectName", equalTo(expected.getProjectName()))
-                , withJsonPath("$[0].projectType", equalTo(expected.getProjectType()))
-                , withJsonPath("$[0].projectClass", equalTo(expected.getProjectClass()))
-                , withJsonPath("$[0].projectStartDate", equalTo(dateFormat.format(expected.getProjectStartDate())))
-                , withJsonPath("$[0].projectEndDate", equalTo(dateFormat.format(expected.getProjectEndDate())))
-                , withJsonPath("$[0].clientId", equalTo(expected.getClientId()))
-                , withJsonPath("$[0].projectManager", equalTo(expected.getProjectManager()))
-                , withJsonPath("$[0].projectLeader", equalTo(expected.getProjectLeader()))
-                , withJsonPath("$[0].note", equalTo(expected.getNote()))
-                , withJsonPath("$[0].sales", equalTo(expected.getSales()))
-                , withJsonPath("$[0].costOfGoodsSold", equalTo(expected.getCostOfGoodsSold()))
-                , withJsonPath("$[0].sga", equalTo(expected.getSga()))
-                , withJsonPath("$[0].allocationOfCorpExpenses", equalTo(expected.getAllocationOfCorpExpenses()))
-                ))
-        );
         with(response.getBodyString())
-                .assertNotDefined("$[0].hoge")
                 .assertThat("$", hasSize(1))
                 .assertThat("$[0]", hasEntry("projectName", expected.getProjectName()))
                 .assertThat("$[0]", hasEntry("projectType", expected.getProjectType()))
@@ -158,12 +127,6 @@ public class ProjectActionTest extends RestTestSupport {
                 .assertThat("$[0]", hasEntry("costOfGoodsSold", expected.getCostOfGoodsSold()))
                 .assertThat("$[0]", hasEntry("sga", expected.getSga()))
                 .assertThat("$[0]", hasEntry("allocationOfCorpExpenses", expected.getAllocationOfCorpExpenses()));
-
-        final Map<String, Object> expectedValues = BeanUtil.createMapAndCopy(expected);
-        final JsonAsserter asserter = with(response.getBodyString());
-        expectedValues.entrySet().stream()
-                .filter(e -> !(e.getKey().endsWith("Date") || "projectId".equals(e.getKey())))
-                .forEach(e -> asserter.assertThat("$[0]", hasEntry(e.getKey(), e.getValue())));
     }
 
     /**
