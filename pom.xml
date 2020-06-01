@@ -270,7 +270,6 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.22.2</version>
         <configuration>
-          <argLine>-Dfile.encoding=UTF-8</argLine>
           <!-- MANIFEST.MFでClass-Pathを指定すると、依存jar内で定義されているtaglibのuriを正しく解決してくれない。 -->
           <useManifestOnlyJar>false</useManifestOnlyJar>
         </configuration>
