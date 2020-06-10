@@ -19,7 +19,6 @@ import static com.jayway.jsonassert.JsonAssert.with;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
-import static nablarch.test.Assertion.fail;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasEntry;
@@ -28,18 +27,14 @@ import static org.junit.Assert.assertThat;
 
 public class ProjectActionTest extends RestTestSupport {
     @Test
-    public void プロジェクト一覧が取得できること() {
+    public void プロジェクト一覧が取得できること() throws JSONException {
         String message = "プロジェクト一覧取得";
         HttpResponse response = sendRequest(get("/projects"));
-        assertStatusCode(message, HttpResponse.Status.OK.getStatusCode(), response);
+        assertStatusCode(message, HttpResponse.Status.OK, response);
 
         assertThat(response.getBodyString(), hasJsonPath("$", hasSize(10)));
-        try {
-            JSONAssert.assertEquals(message, readTextResource("プロジェクト一覧が取得できること.json")
-                    , response.getBodyString(), JSONCompareMode.LENIENT);
-        } catch (JSONException e) {
-            fail(e.getMessage());
-        }
+        JSONAssert.assertEquals(message, readTextResource("プロジェクト一覧が取得できること.json")
+                , response.getBodyString(), JSONCompareMode.LENIENT);
     }
 
     @Test
@@ -47,19 +42,19 @@ public class ProjectActionTest extends RestTestSupport {
         // プロジェクトが1件も登録されていないこと
         String message1 = "プロジェクト一覧取得(登録前)";
         HttpResponse beforeRegisterResponse = sendRequest(get("/projects"));
-        assertStatusCode(message1, HttpResponse.Status.OK.getStatusCode(), beforeRegisterResponse);
+        assertStatusCode(message1, HttpResponse.Status.OK, beforeRegisterResponse);
         assertThat(beforeRegisterResponse.getBodyString(), hasJsonPath("$", empty()));
 
         // 新規登録
         String message2 = "プロジェクト新規登録";
         ProjectForm projectForm = createInsertProject();
         HttpResponse registerResponse = sendRequest(post("/projects").setBody(projectForm));
-        assertStatusCode(message2, HttpResponse.Status.CREATED.getStatusCode(), registerResponse);
+        assertStatusCode(message2, HttpResponse.Status.CREATED, registerResponse);
 
         // 登録したプロジェクトが取得できること
         String message3 = "プロジェクト一覧取得(登録後)";
         HttpResponse afterRegisterResponse = sendRequest(get("/projects"));
-        assertStatusCode(message3, HttpResponse.Status.OK.getStatusCode(), afterRegisterResponse);
+        assertStatusCode(message3, HttpResponse.Status.OK, afterRegisterResponse);
         assertProjectEquals(BeanUtil.createAndCopy(Project.class, projectForm), afterRegisterResponse);
 
         assertTableEquals("プロジェクトを新規登録できること");
@@ -72,12 +67,12 @@ public class ProjectActionTest extends RestTestSupport {
 
         String message1 = "変更前に変更しようとするプロジェクト名に一致するデータが存在しないこと";
         HttpResponse projectNameNotFoundResponse = sendRequest(get(project888Uri));
-        assertStatusCode(message1, HttpResponse.Status.OK.getStatusCode(), projectNameNotFoundResponse);
+        assertStatusCode(message1, HttpResponse.Status.OK, projectNameNotFoundResponse);
         assertThat(message1, projectNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
 
         String message2 = "変更対象取得";
         HttpResponse getTargetProjectResponse = sendRequest(get(project001Uri));
-        assertStatusCode(message2, HttpResponse.Status.OK.getStatusCode(), getTargetProjectResponse);
+        assertStatusCode(message2, HttpResponse.Status.OK, getTargetProjectResponse);
         assertThat(message2, getTargetProjectResponse.getBodyString(), isJson(allOf(
                 withJsonPath("$", hasSize(1))
                 , withJsonPath("$[0]", hasEntry("projectName", "プロジェクト００１")))));
@@ -87,16 +82,16 @@ public class ProjectActionTest extends RestTestSupport {
 
         String message3 = "プロジェクト更新";
         HttpResponse updateResponse = sendRequest(put("/projects").setBody(updateForm));
-        assertStatusCode(message3, HttpResponse.Status.OK.getStatusCode(), updateResponse);
+        assertStatusCode(message3, HttpResponse.Status.OK, updateResponse);
 
         String message4 = "変更前のプロジェクト名に一致するデータが存在しないこと";
         HttpResponse previousNameNotFoundResponse = sendRequest(get(project001Uri));
-        assertStatusCode(message4, HttpResponse.Status.OK.getStatusCode(), previousNameNotFoundResponse);
+        assertStatusCode(message4, HttpResponse.Status.OK, previousNameNotFoundResponse);
         assertThat(message4, previousNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
 
         String message5 = "取得したプロジェクトが変更した内容と一致すること";
         HttpResponse projectNameFoundResponse = sendRequest(get(project888Uri));
-        assertStatusCode(message5, HttpResponse.Status.OK.getStatusCode(), projectNameFoundResponse);
+        assertStatusCode(message5, HttpResponse.Status.OK, projectNameFoundResponse);
         // Projectとのアサート
         assertProjectEquals(BeanUtil.createAndCopy(Project.class, updateForm), projectNameFoundResponse);
     }
