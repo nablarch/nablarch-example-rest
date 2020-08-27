@@ -1,13 +1,11 @@
 package com.nablarch.example.action;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
+import com.nablarch.example.dto.ProjectResponseDto;
+import com.nablarch.example.dto.ProjectSearchDto;
+import com.nablarch.example.entity.Project;
+import com.nablarch.example.form.ProjectForm;
+import com.nablarch.example.form.ProjectSearchForm;
+import com.nablarch.example.form.ProjectUpdateForm;
 import nablarch.common.dao.EntityList;
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
@@ -15,18 +13,23 @@ import nablarch.core.validation.ee.ValidatorUtil;
 import nablarch.fw.web.HttpRequest;
 import nablarch.fw.web.HttpResponse;
 
-import com.nablarch.example.dto.ProjectResponseDto;
-import com.nablarch.example.dto.ProjectSearchDto;
-import com.nablarch.example.entity.Project;
-import com.nablarch.example.form.ProjectForm;
-import com.nablarch.example.form.ProjectSearchForm;
-import com.nablarch.example.form.ProjectUpdateForm;
+import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * プロジェクト検索・登録・更新機能。
  *
  * @author Nabu Rakutaro
  */
+@Path("/projects")
 public class ProjectAction {
 
     /**
@@ -35,6 +38,7 @@ public class ProjectAction {
      * @param req HTTPリクエスト
      * @return プロジェクト情報リスト
      */
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ProjectResponseDto> find(HttpRequest req) {
 
@@ -58,6 +62,7 @@ public class ProjectAction {
      * @param project プロジェクト情報
      * @return HTTPレスポンス
      */
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Valid
     public HttpResponse save(ProjectForm project) {
@@ -71,6 +76,7 @@ public class ProjectAction {
      * @param form プロジェクト情報
      * @return HTTPレスポンス
      */
+    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Valid
     public HttpResponse update(ProjectUpdateForm form) {
