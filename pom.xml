@@ -14,9 +14,9 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-    <db.adminUser>REST_EXAMPLE</db.adminUser>
-    <db.user>REST_EXAMPLE</db.user>
+    <db.adminUser>postgres</db.adminUser>
+    <db.adminPassword>postgres</db.adminPassword>
+    <db.user>rest_example</db.user>
 
   </properties>
 
@@ -111,9 +111,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>1.4.196</version>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>42.2.6.jre6</version>
       <scope>runtime</scope>
     </dependency>
 
@@ -191,11 +191,11 @@
         <configuration>
           <erdFile>src/main/resources/entity/data-model.edm</erdFile>
 
-          <driver>org.h2.Driver</driver>
-          <url>jdbc:h2:./h2/db/rest_example</url>
+          <driver>org.postgresql.Driver</driver>
+          <url>jdbc:postgresql://localhost:5432/postgres</url>
 
           <adminUser>${db.adminUser}</adminUser>
-          <adminPassword>${db.adminUser}</adminPassword>
+          <adminPassword>${db.adminPassword}</adminPassword>
           <user>${db.user}</user>
           <password>${db.user}</password>
           <schema>PUBLIC</schema>
@@ -209,9 +209,9 @@
         </configuration>
         <dependencies>
           <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.196</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.6.jre6</version>
             <scope>runtime</scope>
           </dependency>
         </dependencies>

@@ -45,7 +45,7 @@
   </component>
 
   <!-- ダイアレクト設定 -->
-  <component name="dialect" class="nablarch.core.db.dialect.H2Dialect" />
+  <component name="dialect" class="nablarch.core.db.dialect.PostgreSQLDialect" />
 
   <!-- ハンドラキュー構成 -->
   <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">
