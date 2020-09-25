@@ -61,6 +61,23 @@
           <property name="errorLogWriter">
             <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
           </property>
+          <property name="responseFinishers">
+            <list>
+              <component class="nablarch.fw.jaxrs.AdoptHandlerResponseFinisher">
+                <property name="handler">
+                  <component class="nablarch.fw.web.handler.SecureHandler">
+                    <property name="secureResponseHeaderList">
+                      <list>
+                        <component class="nablarch.fw.web.handler.secure.ContentTypeOptionsHeader" />
+                        <component class="nablarch.fw.web.handler.secure.ReferrerPolicyHeader" />
+                        <component class="nablarch.fw.web.handler.secure.CacheControlHeader" />
+                      </list>
+                    </property>
+                  </component>
+                </property>
+              </component>
+            </list>
+          </property>
         </component>
         <component-ref name="threadContextHandler"/>
         <component class="nablarch.common.web.handler.HttpAccessLogHandler"/>
