@@ -1,5 +1,0 @@
-<routes>
-  <get    path="projects" to="Project#find" />
-  <post   path="projects" to="Project#save" />
-  <put    path="projects" to="Project#update" />
-</routes>

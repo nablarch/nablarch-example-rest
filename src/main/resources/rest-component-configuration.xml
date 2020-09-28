@@ -28,8 +28,13 @@
   <import file="nablarch/webui/threadcontext-for-webui-in-sessionstore.xml"/>
 
   <!--パッケージマッピングの設定 -->
-  <component name="packageMapping" class="nablarch.integration.router.RoutesMapping">
-    <property name="basePackage" value="${nablarch.commonProperty.basePackage}" />
+  <component name="packageMapping" class="nablarch.integration.router.PathOptionsProviderRoutesMapping">
+    <property name="pathOptionsProvider">
+      <component class="nablarch.integration.router.jaxrs.JaxRsPathOptionsProvider">
+        <property name="applicationPath" value="${nablarch.webApi.applicationPath}"/>
+        <property name="basePackage" value="${nablarch.commonProperty.basePackage}"/>
+      </component>
+    </property>
     <property name="methodBinderFactory">
       <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
         <property name="handlerList">
@@ -55,6 +60,23 @@
           </property>
           <property name="errorLogWriter">
             <component class="com.nablarch.example.error.ExampleErrorLogWriter" />
+          </property>
+          <property name="responseFinishers">
+            <list>
+              <component class="nablarch.fw.jaxrs.AdoptHandlerResponseFinisher">
+                <property name="handler">
+                  <component class="nablarch.fw.web.handler.SecureHandler">
+                    <property name="secureResponseHeaderList">
+                      <list>
+                        <component class="nablarch.fw.web.handler.secure.ContentTypeOptionsHeader" />
+                        <component class="nablarch.fw.web.handler.secure.ReferrerPolicyHeader" />
+                        <component class="nablarch.fw.web.handler.secure.CacheControlHeader" />
+                      </list>
+                    </property>
+                  </component>
+                </property>
+              </component>
+            </list>
           </property>
         </component>
         <component-ref name="threadContextHandler"/>
