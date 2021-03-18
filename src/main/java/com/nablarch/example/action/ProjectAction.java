@@ -15,10 +15,6 @@ import nablarch.fw.web.HttpResponse;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
@@ -29,7 +25,6 @@ import java.util.stream.Collectors;
  *
  * @author Nabu Rakutaro
  */
-@Path("/projects")
 public class ProjectAction {
 
     /**
@@ -38,7 +33,6 @@ public class ProjectAction {
      * @param req HTTPリクエスト
      * @return プロジェクト情報リスト
      */
-    @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<ProjectResponseDto> find(HttpRequest req) {
 
@@ -62,7 +56,6 @@ public class ProjectAction {
      * @param project プロジェクト情報
      * @return HTTPレスポンス
      */
-    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Valid
     public HttpResponse save(ProjectForm project) {
@@ -76,7 +69,6 @@ public class ProjectAction {
      * @param form プロジェクト情報
      * @return HTTPレスポンス
      */
-    @PUT
     @Consumes(MediaType.APPLICATION_JSON)
     @Valid
     public HttpResponse update(ProjectUpdateForm form) {

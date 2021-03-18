@@ -28,13 +28,8 @@
   <import file="nablarch/webui/threadcontext-for-webui-in-sessionstore.xml"/>
 
   <!--パッケージマッピングの設定 -->
-  <component name="packageMapping" class="nablarch.integration.router.PathOptionsProviderRoutesMapping">
-    <property name="pathOptionsProvider">
-      <component class="nablarch.integration.router.jaxrs.JaxRsPathOptionsProvider">
-        <property name="applicationPath" value="${nablarch.webApi.applicationPath}"/>
-        <property name="basePackage" value="${nablarch.commonProperty.basePackage}"/>
-      </component>
-    </property>
+  <component name="packageMapping" class="nablarch.integration.router.RoutesMapping">
+    <property name="basePackage" value="${nablarch.commonProperty.basePackage}" />
     <property name="methodBinderFactory">
       <component class="nablarch.fw.jaxrs.JaxRsMethodBinderFactory">
         <property name="handlerList">
@@ -45,7 +40,7 @@
   </component>
 
   <!-- ダイアレクト設定 -->
-  <component name="dialect" class="nablarch.core.db.dialect.H2Dialect" />
+  <component name="dialect" class="nablarch.core.db.dialect.PostgreSQLDialect" />
 
   <!-- ハンドラキュー構成 -->
   <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">

@@ -19,7 +19,7 @@ import com.nablarch.example.entity.Project;
 
 public class ProjectClient {
 
-    private static final String targetUrl = "http://localhost:9080/projects";
+    private static final String targetUrl = "http://127.0.0.1:8080/nablarch-example-rest/projects";
 
     /**
      * プロジェクト情報の文字列変換を行う。
