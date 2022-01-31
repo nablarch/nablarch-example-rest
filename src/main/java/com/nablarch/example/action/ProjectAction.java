@@ -88,7 +88,13 @@ public class ProjectAction {
 
         return new HttpResponse(HttpResponse.Status.OK.getStatusCode());
     }
-    
+
+    /**
+     * プロジェクト名を更新する。
+     * 
+     * @param form プロジェクト情報(プロジェクト名)
+     * @return HTTPレスポンス
+     */
     @PATCH
     @Consumes(MediaType.APPLICATION_JSON)
     @Valid
