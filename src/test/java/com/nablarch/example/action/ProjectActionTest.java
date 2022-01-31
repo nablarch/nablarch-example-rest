@@ -3,6 +3,7 @@ package com.nablarch.example.action;
 import com.jayway.jsonpath.JsonPath;
 import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
+import com.nablarch.example.form.ProjectRenameForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 import nablarch.core.beans.BeanUtil;
 import nablarch.fw.web.HttpResponse;
@@ -23,6 +24,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class ProjectActionTest extends RestTestSupport {
@@ -95,7 +97,44 @@ public class ProjectActionTest extends RestTestSupport {
         // Projectとのアサート
         assertProjectEquals(BeanUtil.createAndCopy(Project.class, updateForm), projectNameFoundResponse);
     }
+    
+    @Test
+    public void プロジェクト名を更新できること() throws IOException {
+        String project002Uri = "/projects?projectName=プロジェクト００２";
+        String project777Uri = "/projects?projectName=プロジェクト７７７";
 
+        String message1 = "変更前に変更しようとするプロジェクト名に一致するデータが存在しないこと";
+        HttpResponse projectNameNotFoundResponse = sendRequest(get(project777Uri));
+        assertStatusCode(message1, HttpResponse.Status.OK, projectNameNotFoundResponse);
+        assertThat(message1, projectNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
+
+        String message2 = "変更対象取得";
+        HttpResponse getTargetProjectResponse = sendRequest(get(project002Uri));
+        assertStatusCode(message2, HttpResponse.Status.OK, getTargetProjectResponse);
+        assertThat(message2, getTargetProjectResponse.getBodyString(), isJson(allOf(
+                withJsonPath("$", hasSize(1))
+                , withJsonPath("$[0]", hasEntry("projectName", "プロジェクト００２")))));
+
+        int projectId = JsonPath.read(getTargetProjectResponse.getBodyStream(), "$[0].projectId");
+        ProjectRenameForm renameForm = setRenameProject(String.valueOf(projectId));
+
+        String message3 = "プロジェクト名更新";
+        HttpResponse renamedResponse = sendRequest(patch("/projects").setBody(renameForm));
+        assertStatusCode(message3, HttpResponse.Status.NO_CONTENT, renamedResponse);
+
+        String message4 = "変更前のプロジェクト名に一致するデータが存在しないこと";
+        HttpResponse previousNameNotFoundResponse = sendRequest(get(project002Uri));
+        assertStatusCode(message4, HttpResponse.Status.OK, previousNameNotFoundResponse);
+        assertThat(message4, previousNameNotFoundResponse.getBodyString(), hasJsonPath("$", empty()));
+
+        String message5 = "取得したプロジェクトが変更した内容と一致すること";
+        HttpResponse projectNameFoundResponse = sendRequest(get(project777Uri));
+        assertStatusCode(message5, HttpResponse.Status.OK, projectNameFoundResponse);
+        with(projectNameFoundResponse.getBodyString())
+                .assertThat("$", hasSize(1))
+                .assertThat("$[0]", hasEntry("projectId", Integer.parseInt(renameForm.getProjectId())))
+                .assertThat("$[0]", hasEntry("projectName", renameForm.getProjectName()));
+    }
 
     private void assertProjectEquals(Project expected, HttpResponse response) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
@@ -161,6 +200,19 @@ public class ProjectActionTest extends RestTestSupport {
         form.setCostOfGoodsSold("2000");
         form.setSga("3000");
         form.setAllocationOfCorpExpenses("4000");
+        return form;
+    }
+
+    /**
+     * プロジェクト名変更用プロジェクト情報設定
+     *
+     * @param projectId 更新対象プロジェクトID
+     * @return プロジェクト名変更用プロジェクト情報
+     */
+    private static ProjectRenameForm setRenameProject(String projectId) {
+        ProjectRenameForm form = new ProjectRenameForm();
+        form.setProjectId(projectId);
+        form.setProjectName("プロジェクト７７７");
         return form;
     }
 }

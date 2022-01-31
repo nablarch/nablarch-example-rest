@@ -4,6 +4,7 @@ import com.nablarch.example.dto.ProjectResponseDto;
 import com.nablarch.example.dto.ProjectSearchDto;
 import com.nablarch.example.entity.Project;
 import com.nablarch.example.form.ProjectForm;
+import com.nablarch.example.form.ProjectRenameForm;
 import com.nablarch.example.form.ProjectSearchForm;
 import com.nablarch.example.form.ProjectUpdateForm;
 import nablarch.common.dao.EntityList;
@@ -16,6 +17,7 @@ import nablarch.fw.web.HttpResponse;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -85,5 +87,17 @@ public class ProjectAction {
         UniversalDao.update(project);
 
         return new HttpResponse(HttpResponse.Status.OK.getStatusCode());
+    }
+    
+    @PATCH
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Valid
+    public HttpResponse patch(ProjectRenameForm form) {
+        Project project = UniversalDao.findById(Project.class, form.getProjectId());
+        project.setProjectName(form.getProjectName());
+        
+        UniversalDao.update(project);
+        
+        return new HttpResponse(HttpResponse.Status.NO_CONTENT.getStatusCode());
     }
 }
