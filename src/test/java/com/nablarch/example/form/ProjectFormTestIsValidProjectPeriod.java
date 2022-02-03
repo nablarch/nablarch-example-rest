@@ -1,35 +1,37 @@
 package com.nablarch.example.form;
 
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import org.junit.Assert;
-import org.junit.experimental.theories.DataPoints;
-import org.junit.experimental.theories.Theories;
-import org.junit.experimental.theories.Theory;
-import org.junit.runner.RunWith;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * {@link ProjectForm#isValidProjectPeriod()}のテスト。
  */
-@RunWith(Theories.class)
-public class ProjectFormTestIsValidProjectPeriod {
-    
-    @DataPoints
-    public static Fixture[] fixtures = {
+class ProjectFormTestIsValidProjectPeriod {
+
+    static List<Fixture> プロジェクト期間の相関バリデーションのテスト() {
+        return Arrays.asList(
             new Fixture("", "", true),
             new Fixture("", "20150101", true),
             new Fixture("20150101", "", true),
             new Fixture("20150101", "20150102", true),
             new Fixture("20150102", "20150101", false)
-    };
+        );
+    }
 
-    @Theory
-    public void プロジェクト期間の相関バリデーションのテスト(Fixture fixture) throws Exception {
+    @ParameterizedTest
+    @MethodSource
+    void プロジェクト期間の相関バリデーションのテスト(Fixture fixture) throws Exception {
         final ProjectForm form = new ProjectForm();
         form.setProjectStartDate(fixture.start);
         form.setProjectEndDate(fixture.end);
 
-        Assert.assertThat(form.isValidProjectPeriod(), CoreMatchers.is(fixture.expected));
+        assertThat(form.isValidProjectPeriod(), CoreMatchers.is(fixture.expected));
     }
 
     private static class Fixture {
