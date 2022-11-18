@@ -3,7 +3,6 @@ package com.nablarch.example.form;
 import nablarch.core.validation.ee.Domain;
 import nablarch.core.validation.ee.Required;
 
-import javax.validation.constraints.AssertTrue;
 import java.io.Serializable;
 
 /**
