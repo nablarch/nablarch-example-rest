@@ -3,8 +3,8 @@ package com.nablarch.example.validator;
 import nablarch.core.util.DateUtil;
 import nablarch.core.util.StringUtil;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * YYYYMMDDの検証を行う実装クラス。

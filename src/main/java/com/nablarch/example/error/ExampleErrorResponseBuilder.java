@@ -1,6 +1,6 @@
 package com.nablarch.example.error;
 
-import javax.persistence.OptimisticLockException;
+import jakarta.persistence.OptimisticLockException;
 
 import nablarch.common.dao.NoDataException;
 import nablarch.fw.ExecutionContext;
