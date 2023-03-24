@@ -72,11 +72,12 @@ Gitを使用しない場合、最新のタグからzipをダウンロードし�
     Project({projectId=9, projectName=プロジェクト００９, projectType=development, projectClass=b, projectStartDate=2015/04/09, projectEndDate=2015/04/09, clientId=9, projectManager=田中, projectLeader=鈴木, userId=100, note=備考欄３, sales=10000, costOfGoodsSold=1000, sga=2000, allocationOfCorpExpenses=3000, client=null, systemAccount=null})
     Project({projectId=10, projectName=プロジェクト０１０, projectType=maintenance, projectClass=c, projectStartDate=2012/06/22, projectEndDate=2013/04/01, clientId=10, projectManager=山田, projectLeader=佐藤, userId=100, note=備考欄４, sales=10000, costOfGoodsSold=1000, sga=2000, allocationOfCorpExpenses=3000, client=null, systemAccount=null})
     Project({projectId=11, projectName=プロジェクト９９９, projectType=development, projectClass=s, projectStartDate=2016/01/01, projectEndDate=2016/03/31, clientId=10, projectManager=鈴木, projectLeader=佐藤, userId=null, note=備考９９９, sales=10000, costOfGoodsSold=1000, sga=2000, allocationOfCorpExpenses=3000, client=null, systemAccount=null})
-    2019-05-22 10:58:26.319 -INFO- nablarch.core.log.basic.BasicLoggerFactory [null] initialized.
+    2023-03-24 18:07:49.742 -INFO- null [null] boot_proc = [] proc_sys = [rest] req_id = [null] usr_id = [null] initialized.
     	LOGGER = [DEV] NAME REGEX = [DEV] LEVEL = [INFO]
     	LOGGER = [PER] NAME REGEX = [PERFORMANCE] LEVEL = [INFO]
     	LOGGER = [SQL] NAME REGEX = [SQL] LEVEL = [INFO]
-    	LOGGER = [ROO] NAME REGEX = [.*] LEVEL = [INFO]
+    	LOGGER = [ACC] NAME REGEX = [HTTP_ACCESS] LEVEL = [INFO]
+    	LOGGER = [ROO] NAME REGEX = [.*] LEVEL = [DEBUG]
     update status:200
     ---- projects (size: 11) ----
     Project({projectId=1, projectName=プロジェクト００１, projectType=development, projectClass=s, projectStartDate=2010/09/18, projectEndDate=2015/04/09, clientId=1, projectManager=鈴木, projectLeader=佐藤, userId=100, note=備考欄, sales=10000, costOfGoodsSold=1000, sga=2000, allocationOfCorpExpenses=3000, client=null, systemAccount=null})
