@@ -2,9 +2,9 @@ package com.nablarch.example.domain;
 
 import com.nablarch.example.code.ProjectClass;
 import com.nablarch.example.code.ProjectType;
-import com.nablarch.example.validator.CodeValue;
 import com.nablarch.example.validator.YYYYMMDD;
 import nablarch.core.validation.ee.Digits;
+import nablarch.core.validation.ee.EnumElement;
 import nablarch.core.validation.ee.Length;
 import nablarch.core.validation.ee.NumberRange;
 import nablarch.core.validation.ee.SystemChar;
@@ -27,11 +27,11 @@ public class RestExampleDomain {
     private String projectName;
 
     /** 新規開発PJ、または保守PJを表すコード値 */
-    @CodeValue(enumClass = ProjectType.class)
+    @EnumElement(ProjectType.class)
     private String projectType;
 
     /** プロジェクトの規模を表すコード値 */
-    @CodeValue(enumClass = ProjectClass.class)
+    @EnumElement(ProjectClass.class)
     private String projectClass;
 
     /** 日付 */
