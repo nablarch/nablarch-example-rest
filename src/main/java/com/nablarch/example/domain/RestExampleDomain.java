@@ -2,7 +2,7 @@ package com.nablarch.example.domain;
 
 import com.nablarch.example.code.ProjectClass;
 import com.nablarch.example.code.ProjectType;
-import com.nablarch.example.validator.YYYYMMDD;
+import nablarch.core.validation.ee.DateFormat;
 import nablarch.core.validation.ee.Digits;
 import nablarch.core.validation.ee.EnumElement;
 import nablarch.core.validation.ee.Length;
@@ -35,7 +35,7 @@ public class RestExampleDomain {
     private String projectClass;
 
     /** 日付 */
-    @YYYYMMDD
+    @DateFormat
     private String date;
 
     /** ユーザ氏名（漢字） */
