@@ -1,13 +1,13 @@
 package com.nablarch.example.code;
 
-import nablarch.core.validation.ee.EnumElement;
+import nablarch.core.validation.ee.EnumElement.WithValue;
 
 /**
  * コード値を定義したEnumが実装するインタフェース。
  *
  * @author Nabu Rakutaro
  */
-public interface CodeEnum extends EnumElement.WithValue<String> {
+public interface CodeEnum extends WithValue<String> {
     /**
      * ラベルを返却する。
      * @return ラベル
