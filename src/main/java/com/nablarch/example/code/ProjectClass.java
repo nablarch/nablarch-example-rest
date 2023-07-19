@@ -1,12 +1,11 @@
 package com.nablarch.example.code;
 
-import nablarch.core.validation.ee.EnumElement.WithValue;
 /**
  * 本Exampleで使用するプロジェクト分類を定義したEnum。
  *
  * @author Nabu Rakutaro
  */
-public enum ProjectClass implements WithValue<String> {
+public enum ProjectClass implements CodeEnum {
     /** SS級 */
     SS("ss", "SS"),
     /** S級 */
@@ -24,29 +23,26 @@ public enum ProjectClass implements WithValue<String> {
     private final String label;
 
     /** プロジェクト分類のコード */
-    private final String code;
+    private final String value;
 
     /**
      * コンストラクタ。
      *
-     * @param code コード値
+     * @param value コード値
      * @param label ラベル
      */
-    ProjectClass(String code, String label) {
+    ProjectClass(String value, String label) {
         this.label = label;
-        this.code = code;
+        this.value = value;
     }
 
+    @Override
     public String getLabel() {
         return label;
     }
 
-    public String getCode() {
-        return code;
-    }
-
     @Override
     public String getValue() {
-        return code;
+        return value;
     }
 }
