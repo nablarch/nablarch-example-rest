@@ -6,14 +6,4 @@
 
   <!-- デフォルトコンフィグレーションの設定を読み込む-->
   <import file="nablarch/core/validation/charset-definition.xml" />
-
-  <component name="英大文字" class="nablarch.core.validation.validator.unicode.RangedCharsetDef">
-    <property name="startCodePoint" value="U+0041"/>
-    <property name="endCodePoint" value="U+005A"/>
-  </component>
-
-  <component name="数字" class="nablarch.core.validation.validator.unicode.RangedCharsetDef">
-    <property name="startCodePoint" value="U+0030"/>
-    <property name="endCodePoint" value="U+0039"/>
-  </component>
 </component-configuration>
