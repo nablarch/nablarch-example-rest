@@ -29,7 +29,7 @@
   </component>
 
   <!-- ★レジストリのファクトリクラスをコンポーネントとして宣言する -->
-  <component class="nablarch.integration.micrometer.logging.LoggingMeterRegistryFactory">
+  <component class="nablarch.integration.micrometer.otlp.OtlpMeterRegistryFactory">
     <property name="meterBinderListProvider" ref="meterBinderListProvider" />
     <property name="applicationDisposer" ref="disposer" />
   </component>
