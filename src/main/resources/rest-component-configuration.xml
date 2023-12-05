@@ -29,7 +29,7 @@
   </component>
 
   <!-- ★レジストリのファクトリクラスをコンポーネントとして宣言する -->
-  <component class="nablarch.integration.micrometer.otlp.OtlpMeterRegistryFactory">
+  <component name="meterRegistry" class="nablarch.integration.micrometer.otlp.OtlpMeterRegistryFactory">
     <property name="meterBinderListProvider" ref="meterBinderListProvider" />
     <property name="applicationDisposer" ref="disposer" />
   </component>
@@ -69,6 +69,17 @@
   <component name="webFrontController" class="nablarch.fw.web.servlet.WebFrontController">
     <property name="handlerQueue">
       <list>
+        <!-- ★HTTPリクエストの処理時間のメトリクス収集ハンドラ -->
+        <component class="nablarch.integration.micrometer.instrument.handler.TimerMetricsHandler">
+          <!-- ★レジストリファクトリが生成する otlpMeterRegistry を meterRegistry プロパティに設定する -->
+          <property name="meterRegistry" ref="meterRegistry" />
+
+          <!-- ★HttpRequestTimeMetricsMetaDataBuilder を handlerMetricsMetaDataBuilder に設定する -->
+          <property name="handlerMetricsMetaDataBuilder">
+            <component class="nablarch.integration.micrometer.instrument.http.HttpRequestTimeMetricsMetaDataBuilder" />
+          </property>
+        </component>
+
         <component class="nablarch.fw.web.handler.HttpCharacterEncodingHandler" />
         <component class="nablarch.common.handler.threadcontext.ThreadContextClearHandler"/>
         <component class="nablarch.fw.handler.GlobalErrorHandler"/>
