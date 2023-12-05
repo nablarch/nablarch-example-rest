@@ -16,6 +16,24 @@
   <!-- BeanValidation実装クラス -->
   <component name="validationStrategy" class="nablarch.common.web.validator.BeanValidationStrategy" />
 
+  <!-- ★DefaultMeterBinderListProviderをコンポーネントとして宣言する -->
+  <component name="meterBinderListProvider" class="nablarch.integration.micrometer.DefaultMeterBinderListProvider" />
+
+  <!-- ★DefaultMeterBinderListProviderを廃棄処理対象にする -->
+  <component name="disposer" class="nablarch.core.repository.disposal.BasicApplicationDisposer">
+    <property name="disposableList">
+      <list>
+        <component-ref name="meterBinderListProvider"/>
+      </list>
+    </property>
+  </component>
+
+  <!-- ★レジストリのファクトリクラスをコンポーネントとして宣言する -->
+  <component class="nablarch.integration.micrometer.logging.LoggingMeterRegistryFactory">
+    <property name="meterBinderListProvider" ref="meterBinderListProvider" />
+    <property name="applicationDisposer" ref="disposer" />
+  </component>
+
   <!-- 環境設定ファイル -->
   <config-file file="common.properties" />
   <config-file file="env.properties" />
