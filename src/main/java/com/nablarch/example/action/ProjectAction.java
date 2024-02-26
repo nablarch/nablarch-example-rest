@@ -10,8 +10,8 @@ import com.nablarch.example.form.ProjectUpdateForm;
 import nablarch.common.dao.EntityList;
 import nablarch.common.dao.UniversalDao;
 import nablarch.core.beans.BeanUtil;
-import nablarch.fw.jaxrs.JaxRsRequestUtil;
-import nablarch.fw.web.HttpRequest;
+import nablarch.core.validation.ee.ValidatorUtil;
+import nablarch.fw.jaxrs.JaxRsHttpRequest;
 import nablarch.fw.web.HttpResponse;
 
 import javax.validation.Valid;
@@ -42,10 +42,13 @@ public class ProjectAction {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ProjectResponseDto> find(HttpRequest req) {
+    public List<ProjectResponseDto> find(JaxRsHttpRequest req) {
 
-        // リクエストパラメータをBeanに変換し、BeanValidation実行
-        ProjectSearchForm form = JaxRsRequestUtil.getValidatedBean(ProjectSearchForm.class, req);
+        // リクエストパラメータをBeanに変換
+        ProjectSearchForm form = BeanUtil.createAndCopy(ProjectSearchForm.class, req.getParamMap());
+
+        // BeanValidation実行
+        ValidatorUtil.validate(form);
 
         ProjectSearchDto searchCondition = BeanUtil.createAndCopy(ProjectSearchDto.class, form);
         EntityList<Project> projectList = UniversalDao.findAllBySqlFile(Project.class, "FIND_PROJECT", searchCondition);
