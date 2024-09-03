@@ -118,7 +118,7 @@ Project({projectId=11, projectName=プロジェクト８８８, projectType=deve
 Process finished with exit code 0
 ```
 
-### 7. DBの確認方法
+### 6. DBの確認方法
 
 1. https://www.h2database.com/html/download.html からH2をインストールしてください。  
 
