@@ -44,7 +44,7 @@ Gitを使用しない場合、最新のタグからzipをダウンロードし�
 
 * com.nablarch.example.client.ProjectClient
 
-別のターミナルを開き、以下のコマンドを実行してください。
+IDEから実行するか、別のターミナルを開いて以下のコマンドを実行してください。
 
     $cd c:\example\nablarch-example-rest
     $mvn test-compile
