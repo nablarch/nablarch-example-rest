@@ -40,9 +40,15 @@ Gitを使用しない場合、最新のタグからzipをダウンロードし�
 
 ### 5. テスト用クライアントクラスからのアクセス
 
-以下のクラスのmainメソッドを実行します。
+`src\test\java`以下に配置している、テスト用クライアントクラスのmainメソッドを実行します。
 
 * com.nablarch.example.client.ProjectClient
+
+IDEから実行するか、別のターミナルを開いて以下のコマンドを実行してください。
+
+    $cd c:\example\nablarch-example-rest
+    $mvn test-compile
+    $mvn exec:java -Dexec.mainClass=com.nablarch.example.client.ProjectClient -Dexec.classpathScope=test
 
 初期状態のデータでは、標準出力に以下の内容が表示されればOKです。
 
