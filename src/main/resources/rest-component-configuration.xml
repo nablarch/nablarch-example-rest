@@ -24,6 +24,9 @@
   <import file="nablarch/core/db-base.xml" />
   <import file="db.xml" />
 
+  <!-- ファイルアップロード機能設定 -->
+  <import file="nablarch/webui/multipart.xml" />
+
   <!-- スレッドコンテキストハンドラ -->
   <import file="nablarch/webui/threadcontext-for-webui-in-sessionstore.xml"/>
 
@@ -79,6 +82,7 @@
             </list>
           </property>
         </component>
+        <component-ref name="multipartHandler"/>
         <component-ref name="threadContextHandler"/>
         <component class="nablarch.fw.jaxrs.JaxRsAccessLogHandler"/>
         <component-ref name="dbConnectionManagementHandler"/>
