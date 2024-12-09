@@ -25,8 +25,7 @@
   <import file="db.xml" />
 
   <!-- ファイルパス設定 -->
-  <!-- ファイルパス設定はexampleプロジェクト個別カスタマイズした設定を読込む。 -->
-  <import file="com/nablarch/example/web/webui/filepath-for-webui.xml" />
+  <import file="nablarch/webui/filepath-for-webui.xml" />
 
   <!-- ファイルアップロード機能設定 -->
   <import file="nablarch/webui/multipart.xml" />
