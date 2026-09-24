@@ -66,8 +66,8 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] `pom.xml` に `nablarch-testing-converter:1.0.0-SNAPSHOT` をpluginとして追加する
 - [x] `mvn dependency:resolve` で依存が解決できることを確認する
 - [x] self-check (OK/NG per completion criterion, record in checks/task-2.md)
-- [ ] QA expert review (subagent)
-- [ ] software-engineering expert review (subagent)
+- [x] QA expert review (subagent)
+- [x] software-engineering expert review (subagent)
 - [ ] user review
 
 **Completion criteria**:
