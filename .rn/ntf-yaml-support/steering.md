@@ -89,9 +89,9 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] `ProjectSearchFormTest.xls` をYAMLに変換する
 - [x] `ProjectUpdateFormTest.xls` をYAMLに変換する
 - [x] 変換済みのYAMLファイルを各テストクラスと同じディレクトリに配置する
-- [ ] 変換済みYAMLファイルをgitに追加してコミットする
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-3.md)
-- [ ] QA expert review (subagent)
+- [x] 変換済みYAMLファイルをgitに追加してコミットする
+- [x] self-check (OK/NG per completion criterion, record in checks/task-3.md)
+- [x] QA expert review (subagent)
 - [ ] user review
 
 **Completion criteria**:
