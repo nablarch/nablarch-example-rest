@@ -173,15 +173,24 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 
 - ブランチ由来の判定根拠: jar に git.properties は埋め込まれていないため、ビルド元 clone の現在ブランチ／HEAD（`fix-testdataparser-usage` / `cbad873`）と `.m2` の install 時刻（2026-09-24、本作業と一致）で確定。
 
-## 参考: 事前 install 済みの SNAPSHOT（本作業では未ビルド、ブランチ由来は本リポジトリでは未確定）
+## 事前 install 済みの SNAPSHOT（作業開始前に導入、由来ブランチはユーザー申告）
 
-Assumptions 記載のとおり作業開始前から `.m2` にあった SNAPSHOT（いずれも 2026-09-18 install）。これらは今回のブランチ由来抽出の対象外。
+Assumptions 記載のとおり作業開始前から `.m2` にあった SNAPSHOT（いずれも 2026-09-18 install）。
+由来ブランチはユーザー申告による（いずれも main ではないブランチ。`develop` を含む）。
 
-| アーティファクト | 備考 |
+| アーティファクト | 由来ブランチ | 備考 |
+|---|---|---|
+| `com.nablarch.framework:nablarch-testing-yaml:1.0.0-SNAPSHOT` | `feature/ntf-yaml` | YamlTestDataParser 提供。pom に test 依存として version 明示 |
+| `com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT` | `ntf-test-data-converter` | Excel→YAML 変換 Maven plugin。pom に plugin として version 明示 |
+| `com.nablarch:nablarch-parent:6-NEXT-SNAPSHOT` | `develop` | 上記フレームワーク SNAPSHOT の親 POM |
+| `com.nablarch.dev:nablarch-test-support:6-NEXT-SNAPSHOT` | （ユーザー申告なし） | 上記の推移依存 |
+
+## 関連リポジトリのブランチ（ビルド／作業のベース、ユーザー申告）
+
+| リポジトリ | ブランチ |
 |---|---|
-| `com.nablarch.framework:nablarch-testing-yaml:1.0.0-SNAPSHOT` | YamlTestDataParser 提供。pom に test 依存として version 明示 |
-| `com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT` | Excel→YAML 変換 Maven plugin。pom に plugin として version 明示 |
-| `com.nablarch.dev:nablarch-test-support:6-NEXT-SNAPSHOT` | 上記の推移依存 |
+| `nablarch-parent` | `develop` |
+| `nablarch-example-rest`（本リポジトリ） | `develop`（作業ブランチ `ntf-yaml-support` はここから分岐） |
 
 # State
 
