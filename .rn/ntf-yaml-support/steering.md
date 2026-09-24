@@ -47,6 +47,8 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] `mvn test` を実行する
 - [x] 全テストがパスすることを確認する（失敗があれば報告して止まる）
 - [x] self-check (OK/NG per completion criterion, record in checks/task-1.md)
+- [x] QA expert review (subagent)
+- [x] user review
 
 **Completion criteria**:
 
@@ -60,10 +62,13 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 
 **Steps**:
 
-- [ ] `pom.xml` に `nablarch-testing-yaml:1.0.0-SNAPSHOT` をtest scopeで追加する
-- [ ] `pom.xml` に `nablarch-testing-converter:1.0.0-SNAPSHOT` をpluginとして追加する
-- [ ] `mvn dependency:resolve` で依存が解決できることを確認する
+- [x] `pom.xml` に `nablarch-testing-yaml:1.0.0-SNAPSHOT` をtest scopeで追加する
+- [x] `pom.xml` に `nablarch-testing-converter:1.0.0-SNAPSHOT` をpluginとして追加する
+- [x] `mvn dependency:resolve` で依存が解決できることを確認する
 - [ ] self-check (OK/NG per completion criterion, record in checks/task-2.md)
+- [ ] QA expert review (subagent)
+- [ ] software-engineering expert review (subagent)
+- [ ] user review
 
 **Completion criteria**:
 
