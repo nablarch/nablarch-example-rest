@@ -111,9 +111,9 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] 各 xlsx/xls について、代表的なシート・行をいくつかピックアップしてYAMLと突き合わせ、値・型・行数が一致することを確認する（比較スクリプトで全2465フィールドを機械比較・不一致0）
 - [x] 不一致があれば報告して止まる（不一致0のため続行）
 - [x] 全 `.xlsx`/`.xls` ファイルを削除する
-- [ ] 削除をコミットする
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-4.md)
-- [ ] QA expert review (subagent)
+- [x] 削除をコミットする
+- [x] self-check (OK/NG per completion criterion, record in checks/task-4.md)
+- [x] QA expert review (subagent)
 - [ ] user review
 
 **Completion criteria**:
