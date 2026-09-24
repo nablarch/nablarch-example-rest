@@ -154,34 +154,18 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 # ローカル install 依存（main 以外の特定ブランチ由来）
 
 このリポジトリのビルド／テストは、リリース版ではなく **ローカル `.m2` に手動 install した SNAPSHOT** に依存している。
-そのうち **main（＝リリース版）ではない特定の feature ブランチからビルドして install したもの** を以下に明示する。
-別環境（CI 含む）で再現するには、同一ブランチ・同一コミットをローカルビルドして `.m2` に install する必要がある。
+これらはいずれも **main（＝リリース版）ではないブランチからビルドして install したもの** であり、以下に明示する。
 
-## 特定ブランチから install したもの（本作業で導入）
+## 事前 install 済みの SNAPSHOT（由来ブランチ）
 
-| 項目 | 内容 |
-|---|---|
-| アーティファクト | `com.nablarch.framework:nablarch-testing-rest:6-NEXT-SNAPSHOT` |
-| ビルド元 | `C:\workspace\nablarch-testing-rest`（WSL: `/mnt/c/workspace/nablarch-testing-rest`） |
-| ブランチ | `fix-testdataparser-usage`（**未マージの feature ブランチ。main = リリース版 2.0.0 とは別物**） |
-| コミット | `cbad873`（`docs: task #3 のレビュー指摘の是正を記録し…`, 2026-09-08） |
-| install コマンド | `mvn -Dmaven.test.skip=true install`（テストコンパイルごとスキップ） |
-| install 日時 | 2026-09-24 |
-| `.m2` パス | `/home/k10949/.m2/repository/com/nablarch/framework/nablarch-testing-rest/6-NEXT-SNAPSHOT/` |
-| 目的 | `RestTestSupport.isExisting()` を Apache POI 直読みから `TestDataParser#isResourceExisting()` 委譲へ修正した YAML 対応版。BOM 登録の 2.0.0 を pom で意図的に上書き（task #5「追加対応」参照） |
-| 正式リリース後 | pom の `<version>6-NEXT-SNAPSHOT</version>` 明示を外して BOM 解決へ戻す（[未決] 参照） |
-
-- ブランチ由来の判定根拠: jar に git.properties は埋め込まれていないため、ビルド元 clone の現在ブランチ／HEAD（`fix-testdataparser-usage` / `cbad873`）と `.m2` の install 時刻（2026-09-24、本作業と一致）で確定。
-
-## 事前 install 済みの SNAPSHOT（作業開始前に導入、由来ブランチはユーザー申告）
-
-Assumptions 記載のとおり作業開始前から `.m2` にあった SNAPSHOT（いずれも 2026-09-18 install）。
-由来ブランチはユーザー申告による（いずれも main ではないブランチ。`develop` を含む）。
+`.m2` に手動 install された SNAPSHOT と、その由来ブランチ（いずれも main ではないブランチ。`develop` を含む）。
+別環境（CI 含む）で再現するには、同一ブランチをローカルビルドして `.m2` に install する必要がある。
 
 | アーティファクト | 由来ブランチ | 備考 |
 |---|---|---|
 | `com.nablarch.framework:nablarch-testing-yaml:1.0.0-SNAPSHOT` | `feature/ntf-yaml` | YamlTestDataParser 提供。pom に test 依存として version 明示 |
 | `com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT` | `ntf-test-data-converter` | Excel→YAML 変換 Maven plugin。pom に plugin として version 明示 |
+| `com.nablarch.framework:nablarch-testing-rest:6-NEXT-SNAPSHOT` | `fix-testdataparser-usage`（commit `cbad873`） | `RestTestSupport.isExisting()` を testDataParser 委譲へ修正した YAML 対応版。BOM 登録の 2.0.0 を pom で意図的に上書き（task #5「追加対応」参照）。正式リリース後は pom の version 明示を外して BOM 解決へ戻す（[未決] 参照）。ビルド元 `C:\workspace\nablarch-testing-rest`、`mvn -Dmaven.test.skip=true install` で導入 |
 | `com.nablarch:nablarch-parent:6-NEXT-SNAPSHOT` | `develop` | 上記フレームワーク SNAPSHOT の親 POM |
 | `com.nablarch.dev:nablarch-test-support:6-NEXT-SNAPSHOT` | （ユーザー申告なし） | 上記の推移依存 |
 
