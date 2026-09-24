@@ -84,9 +84,15 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- BOM 登録の 2.0.0 を意図的に上書きしている。2.0.0 は RestTestSupport.isExisting() が
+         Apache POI で Excel を直接開く実装で、SystemRepository の testDataParser（YamlTestDataParser）を
+         経由しないため YAML を読めない。testDataParser 委譲に修正した fix-testdataparser-usage ブランチ
+         （6-NEXT-SNAPSHOT）をローカル .m2 に install して利用する。
+         TODO: testDataParser 委譲を含む正式リリース版が BOM に入ったら、この <version> を削除して BOM 解決に戻す。 -->
     <dependency>
       <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-testing-rest</artifactId>
+      <version>6-NEXT-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

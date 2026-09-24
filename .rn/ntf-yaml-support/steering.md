@@ -114,7 +114,7 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] 削除をコミットする
 - [x] self-check (OK/NG per completion criterion, record in checks/task-4.md)
 - [x] QA expert review (subagent)
-- [ ] user review
+- [x] user review
 
 **Completion criteria**:
 
@@ -130,18 +130,31 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 
 **Steps**:
 
-- [ ] `src/test/resources/unit-test.xml` に `YamlTestDataParser` の設定を追加する（`nablarch-example-web` の `ntf-yaml-support` ブランチの変更を参照）
-- [ ] `mvn test` が BUILD SUCCESS になることを確認する
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-5.md)
+- [x] `src/test/resources/unit-test.xml` に `YamlTestDataParser` の設定を追加する（`nablarch-example-web` の `ntf-yaml-support` ブランチの変更を参照）。yamlInterpreters（QuotationTrimmer 除く）をインライン定義し testDataParser をオーバーライド
+- [x] （追加対応）`nablarch-testing-rest` の testDataParser 委譲版が必要と判明。`fix-testdataparser-usage` ブランチをローカルビルドして `.m2` に install（`6-NEXT-SNAPSHOT`）し、pom で version 明示
+- [x] `mvn test` が BUILD SUCCESS になることを確認する（Tests run: 79, Failures: 0, Errors: 0）
+- [x] テストログで YamlTestDataParser が実際に使われていることを確認する
+- [x] self-check (OK/NG per completion criterion, record in checks/task-5.md)
+- [x] QA expert review (subagent)
+- [x] software-engineering expert review (subagent)
+- [ ] user review（SNAPSHOT 依存の取り扱い方針の合意を含む）
 
 **Completion criteria**:
 
 - `src/test/resources/unit-test.xml` に `testDataParser` として `YamlTestDataParser` が定義されている
 - `mvn test` が BUILD SUCCESS で終了する（全テストパス、xlsx/xls なし）
+- テストログで YamlTestDataParser が実際に使われていることが確認できる
+
+**追加対応（RestTestSupport の testDataParser 委譲）**:
+
+- **事象**: unit-test.xml に YamlTestDataParser を設定しても、`RestTestSupport` ベースの `ProjectActionTest` 4件が `test data file open failed.` で失敗。BOM 登録の `nablarch-testing-rest:2.0.0` は `RestTestSupport.isExisting()` が Apache POI で `.xlsx`/`.xls` を直接ハードコードで開く実装で、SystemRepository の `testDataParser`（YamlTestDataParser）を経由しないため。task #4 で xls 削除済みのため `FileNotFoundException`。
+- **対応**: `nablarch-testing-rest` の `fix-testdataparser-usage` ブランチ（`isExisting()` を `TestDataParser#isResourceExisting()` 委譲に統一、POI 直読み `getSheet()` 除去、Excel 経路は後方互換維持）を `C:\workspace\nablarch-testing-rest` に clone・checkout し `mvn -Dmaven.test.skip=true install` で `6-NEXT-SNAPSHOT` を `.m2` に導入。example の pom で当該 version を明示（BOM 2.0.0 を上書き）。推移依存 `nablarch-testing` は 2.2.0 のまま。
+- **未決（ユーザー判断）**: pom が未リリースの feature ブランチ由来 `6-NEXT-SNAPSHOT` に依存するため、当該ブランチ未 install の環境（CI 含む）ではビルド不能。正式リリース版が出れば version 明示を外して BOM 解決に戻す。方針（正式リリース待ち／CI での事前 install／継承による回避）の合意が必要。
 
 # State
 
 - **Status**: in_progress
-- **Date**: 2026-09-18
-- **Last completed**: #1 ベースライン確認（Tests run: 79, Failures: 0）
-- **Next**: #2 pom.xml に依存追加
+- **Date**: 2026-09-24
+- **Last completed**: #5 unit-test.xml に YamlTestDataParser を設定。`nablarch-testing-rest` の testDataParser 委譲版（`fix-testdataparser-usage`／`6-NEXT-SNAPSHOT`）をローカル install し pom で version 明示。`mvn test` 79件全緑 BUILD SUCCESS。QA=OK / sw-eng=条件付きOK。ユーザーレビュー待ち
+- **Next**: #5 のユーザーレビュー（特に `6-NEXT-SNAPSHOT` 依存の取り扱い方針）→ Acceptance criteria の確認
+- **Notes**: `.m2` に `nablarch-testing-rest:6-NEXT-SNAPSHOT`（`fix-testdataparser-usage` ブランチ `cbad873` を `mvn -Dmaven.test.skip=true install`）が入った状態で 79件全緑。再開時にこれが失われていれば当該ブランチを再 install すること。比較スクリプト用 venv は `~/.cache/ntf-rest-yaml-venv`（リポジトリ外）。
