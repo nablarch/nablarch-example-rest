@@ -5,6 +5,7 @@
 | Criterion | Self-check | Evidence | QA | QA Evidence |
 |---|---|---|---|---|
 | 5つの変換済みYAMLが `src/test/java/com/nablarch/example/` 配下に存在する | OK | 12ファイル生成（5 Excel → 12 YAML）。ProjectActionTest/(2), ProjectFormTest/(3), ProjectRenameFormTest/(2), ProjectSearchFormTest/(2), ProjectUpdateFormTest/(3) | OK | シート数とYAML数が全クラスで一致。全12ファイルに内容あり（21〜990行） |
+| 変換されたYAMLがスキーマに対して有効である | OK | python3 + jsonschema で全12ファイルを ntf-testdata-yaml-schema.json に対して検証。Total: 12, OK: 12, NG: 0 | OK | 全件スキーマ準拠。setup_tables/expected_tables/list_maps がスキーマ定義どおり |
 | 変換済みYAMLがgitでtracked filesとして存在する | OK | commit SHA: 50dcd2f (12 files, 2518 insertions) | OK | git tracked 確認済み |
 
 ## QA Expert Review

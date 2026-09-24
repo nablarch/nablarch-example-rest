@@ -97,6 +97,7 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 **Completion criteria**:
 
 - 5つの変換済みYAMLが `src/test/java/com/nablarch/example/` 配下に存在する
+- 変換されたYAMLがスキーマに対して有効である（ntf-testdata-yaml-schema.json で全件検証）
 - 変換済みYAMLがgitでtracked filesとして存在する
 
 ### #4: ExcelとYAMLの内容一致をサンプリング確認して xlsx/xls を削除する
