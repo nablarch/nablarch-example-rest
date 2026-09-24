@@ -68,7 +68,7 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] self-check (OK/NG per completion criterion, record in checks/task-2.md)
 - [x] QA expert review (subagent)
 - [x] software-engineering expert review (subagent)
-- [ ] user review
+- [x] user review
 
 **Completion criteria**:
 
@@ -83,14 +83,16 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 
 **Steps**:
 
-- [ ] `ProjectActionTest.xlsx` をYAMLに変換する
-- [ ] `ProjectFormTest.xls` をYAMLに変換する
-- [ ] `ProjectRenameFormTest.xls` をYAMLに変換する
-- [ ] `ProjectSearchFormTest.xls` をYAMLに変換する
-- [ ] `ProjectUpdateFormTest.xls` をYAMLに変換する
-- [ ] 変換済みのYAMLファイルを各テストクラスと同じディレクトリに配置する
+- [x] `ProjectActionTest.xlsx` をYAMLに変換する
+- [x] `ProjectFormTest.xls` をYAMLに変換する
+- [x] `ProjectRenameFormTest.xls` をYAMLに変換する
+- [x] `ProjectSearchFormTest.xls` をYAMLに変換する
+- [x] `ProjectUpdateFormTest.xls` をYAMLに変換する
+- [x] 変換済みのYAMLファイルを各テストクラスと同じディレクトリに配置する
 - [ ] 変換済みYAMLファイルをgitに追加してコミットする
 - [ ] self-check (OK/NG per completion criterion, record in checks/task-3.md)
+- [ ] QA expert review (subagent)
+- [ ] user review
 
 **Completion criteria**:
 
