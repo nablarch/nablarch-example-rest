@@ -5,7 +5,7 @@
 
   <groupId>com.nablarch.example</groupId>
   <artifactId>nablarch-example-rest</artifactId>
-  <version>6-NEXT-SNAPSHOT</version>
+  <version>6u3</version>
   <packaging>war</packaging>
 
   <properties>
@@ -39,7 +39,7 @@
       <dependency>
         <groupId>com.nablarch.profile</groupId>
         <artifactId>nablarch-bom</artifactId>
-        <version>6-NEXT-SNAPSHOT</version>
+        <version>6u3</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -219,6 +219,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- 以下2依存は nablarch-bom 未登録のため version を明示（SNAPSHOT リリース待ち） -->
+    <dependency>
+      <groupId>com.nablarch.framework</groupId>
+      <artifactId>nablarch-testing-yaml</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -304,6 +312,24 @@
           <!-- MANIFEST.MFでClass-Pathを指定すると、依存jar内で定義されているtaglibのuriを正しく解決してくれない。 -->
           <useManifestOnlyJar>false</useManifestOnlyJar>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.nablarch.framework</groupId>
+        <artifactId>nablarch-testing-converter</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>default-cli</id>
+            <goals><goal>convert</goal></goals>
+            <configuration>
+              <from>xls</from>
+              <to>yaml</to>
+              <input>${project.basedir}/src/test/java/com/nablarch/example</input>
+              <output>${project.basedir}/src/test/java/com/nablarch/example</output>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.eclipse.jetty.ee10</groupId>
