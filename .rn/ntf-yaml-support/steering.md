@@ -165,7 +165,7 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 |---|---|---|
 | `com.nablarch.framework:nablarch-testing-yaml:1.0.0-SNAPSHOT` | `feature/ntf-yaml` | YamlTestDataParser 提供。pom に test 依存として version 明示 |
 | `com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT` | `ntf-test-data-converter` | Excel→YAML 変換 Maven plugin。pom に plugin として version 明示 |
-| `com.nablarch.framework:nablarch-testing-rest:6-NEXT-SNAPSHOT` | `fix-testdataparser-usage`（commit `cbad873`） | `RestTestSupport.isExisting()` を testDataParser 委譲へ修正した YAML 対応版。BOM 登録の 2.0.0 を pom で意図的に上書き（task #5「追加対応」参照）。正式リリース後は pom の version 明示を外して BOM 解決へ戻す（[未決] 参照）。ビルド元 `C:\workspace\nablarch-testing-rest`、`mvn -Dmaven.test.skip=true install` で導入 |
+| `com.nablarch.framework:nablarch-testing-rest:6-NEXT-SNAPSHOT` | `fix-testdataparser-usage`（commit `cbad873`） | `RestTestSupport.isExisting()` を testDataParser 委譲へ修正した YAML 対応版。BOM 登録の 2.0.0 を pom で意図的に上書き（task #5「追加対応」参照）。正式リリース後は pom の version 明示を外して BOM 解決へ戻す（[未決] 参照）。`mvn -Dmaven.test.skip=true install` で導入 |
 | `com.nablarch:nablarch-parent:6-NEXT-SNAPSHOT` | `develop` | 上記フレームワーク SNAPSHOT の親 POM |
 | `com.nablarch.dev:nablarch-test-support:6-NEXT-SNAPSHOT` | （ユーザー申告なし） | 上記の推移依存 |
 
