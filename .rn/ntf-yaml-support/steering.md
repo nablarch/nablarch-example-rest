@@ -137,7 +137,7 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - [x] self-check (OK/NG per completion criterion, record in checks/task-5.md)
 - [x] QA expert review (subagent)
 - [x] software-engineering expert review (subagent)
-- [ ] user review（SNAPSHOT 依存の取り扱い方針の合意を含む）
+- [x] user review（SNAPSHOT 依存の取り扱い方針の合意を含む）: 2026-09-24 承認
 
 **Completion criteria**:
 
@@ -153,8 +153,15 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 
 # State
 
-- **Status**: in_progress
+- **Status**: completed
 - **Date**: 2026-09-24
-- **Last completed**: #5 unit-test.xml に YamlTestDataParser を設定。`nablarch-testing-rest` の testDataParser 委譲版（`fix-testdataparser-usage`／`6-NEXT-SNAPSHOT`）をローカル install し pom で version 明示。`mvn test` 79件全緑 BUILD SUCCESS。QA=OK / sw-eng=条件付きOK。ユーザーレビュー待ち
-- **Next**: #5 のユーザーレビュー（特に `6-NEXT-SNAPSHOT` 依存の取り扱い方針）→ Acceptance criteria の確認
+- **Last completed**: #5 承認済み。Acceptance criteria 全6項目を検証・充足（下記）。全タスク #1〜#5 完了
+- **Acceptance criteria 検証結果（2026-09-24）**:
+  - [x] 全5 Excel が YAML（計12ファイル）に置換され各テストクラスと同一ディレクトリに配置
+  - [x] `unit-test.xml` に `YamlTestDataParser` 設定あり
+  - [x] テスト `.java` 変更なし（`git diff main...HEAD` に `.java` 0件。設定・依存・データのみ）
+  - [x] `mvn test` 79件全緑 BUILD SUCCESS（リグレッションなし）
+  - [x] 変換済み YAML が tracked としてコミット済み
+  - [x] pom に `nablarch-testing-yaml` / `nablarch-testing-converter` の test 依存あり
+- **Next**: （任意）framework の `nablarch-testing-rest` 正式リリース後に pom の `6-NEXT-SNAPSHOT` version 明示を外して BOM 解決へ戻す。PR 作成はユーザー指示待ち
 - **Notes**: `.m2` に `nablarch-testing-rest:6-NEXT-SNAPSHOT`（`fix-testdataparser-usage` ブランチ `cbad873` を `mvn -Dmaven.test.skip=true install`）が入った状態で 79件全緑。再開時にこれが失われていれば当該ブランチを再 install すること。比較スクリプト用 venv は `~/.cache/ntf-rest-yaml-venv`（リポジトリ外）。
