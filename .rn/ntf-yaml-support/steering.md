@@ -151,6 +151,38 @@ NTF（Nablarch Testing Framework）のAI対応として、`nablarch-example-rest
 - **対応**: `nablarch-testing-rest` の `fix-testdataparser-usage` ブランチ（`isExisting()` を `TestDataParser#isResourceExisting()` 委譲に統一、POI 直読み `getSheet()` 除去、Excel 経路は後方互換維持）を `C:\workspace\nablarch-testing-rest` に clone・checkout し `mvn -Dmaven.test.skip=true install` で `6-NEXT-SNAPSHOT` を `.m2` に導入。example の pom で当該 version を明示（BOM 2.0.0 を上書き）。推移依存 `nablarch-testing` は 2.2.0 のまま。
 - **未決（ユーザー判断）**: pom が未リリースの feature ブランチ由来 `6-NEXT-SNAPSHOT` に依存するため、当該ブランチ未 install の環境（CI 含む）ではビルド不能。正式リリース版が出れば version 明示を外して BOM 解決に戻す。方針（正式リリース待ち／CI での事前 install／継承による回避）の合意が必要。
 
+# ローカル install 依存（main 以外の特定ブランチ由来）
+
+このリポジトリのビルド／テストは、リリース版ではなく **ローカル `.m2` に手動 install した SNAPSHOT** に依存している。
+そのうち **main（＝リリース版）ではない特定の feature ブランチからビルドして install したもの** を以下に明示する。
+別環境（CI 含む）で再現するには、同一ブランチ・同一コミットをローカルビルドして `.m2` に install する必要がある。
+
+## 特定ブランチから install したもの（本作業で導入）
+
+| 項目 | 内容 |
+|---|---|
+| アーティファクト | `com.nablarch.framework:nablarch-testing-rest:6-NEXT-SNAPSHOT` |
+| ビルド元 | `C:\workspace\nablarch-testing-rest`（WSL: `/mnt/c/workspace/nablarch-testing-rest`） |
+| ブランチ | `fix-testdataparser-usage`（**未マージの feature ブランチ。main = リリース版 2.0.0 とは別物**） |
+| コミット | `cbad873`（`docs: task #3 のレビュー指摘の是正を記録し…`, 2026-09-08） |
+| install コマンド | `mvn -Dmaven.test.skip=true install`（テストコンパイルごとスキップ） |
+| install 日時 | 2026-09-24 |
+| `.m2` パス | `/home/k10949/.m2/repository/com/nablarch/framework/nablarch-testing-rest/6-NEXT-SNAPSHOT/` |
+| 目的 | `RestTestSupport.isExisting()` を Apache POI 直読みから `TestDataParser#isResourceExisting()` 委譲へ修正した YAML 対応版。BOM 登録の 2.0.0 を pom で意図的に上書き（task #5「追加対応」参照） |
+| 正式リリース後 | pom の `<version>6-NEXT-SNAPSHOT</version>` 明示を外して BOM 解決へ戻す（[未決] 参照） |
+
+- ブランチ由来の判定根拠: jar に git.properties は埋め込まれていないため、ビルド元 clone の現在ブランチ／HEAD（`fix-testdataparser-usage` / `cbad873`）と `.m2` の install 時刻（2026-09-24、本作業と一致）で確定。
+
+## 参考: 事前 install 済みの SNAPSHOT（本作業では未ビルド、ブランチ由来は本リポジトリでは未確定）
+
+Assumptions 記載のとおり作業開始前から `.m2` にあった SNAPSHOT（いずれも 2026-09-18 install）。これらは今回のブランチ由来抽出の対象外。
+
+| アーティファクト | 備考 |
+|---|---|
+| `com.nablarch.framework:nablarch-testing-yaml:1.0.0-SNAPSHOT` | YamlTestDataParser 提供。pom に test 依存として version 明示 |
+| `com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT` | Excel→YAML 変換 Maven plugin。pom に plugin として version 明示 |
+| `com.nablarch.dev:nablarch-test-support:6-NEXT-SNAPSHOT` | 上記の推移依存 |
+
 # State
 
 - **Status**: completed
