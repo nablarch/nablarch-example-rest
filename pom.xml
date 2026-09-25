@@ -84,9 +84,15 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- BOM 登録の 2.0.0 を意図的に上書きしている。2.0.0 は RestTestSupport.isExisting() が
+         Apache POI で Excel を直接開く実装で、SystemRepository の testDataParser（YamlTestDataParser）を
+         経由しないため YAML を読めない。testDataParser 委譲に修正した fix-testdataparser-usage ブランチ
+         （6-NEXT-SNAPSHOT）をローカル .m2 に install して利用する。
+         TODO: testDataParser 委譲を含む正式リリース版が BOM に入ったら、この <version> を削除して BOM 解決に戻す。 -->
     <dependency>
       <groupId>com.nablarch.framework</groupId>
       <artifactId>nablarch-testing-rest</artifactId>
+      <version>6-NEXT-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -219,6 +225,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- nablarch-bom 未登録のため version を明示（SNAPSHOT リリース待ち） -->
+    <dependency>
+      <groupId>com.nablarch.framework</groupId>
+      <artifactId>nablarch-testing-yaml</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -304,6 +318,25 @@
           <!-- MANIFEST.MFでClass-Pathを指定すると、依存jar内で定義されているtaglibのuriを正しく解決してくれない。 -->
           <useManifestOnlyJar>false</useManifestOnlyJar>
         </configuration>
+      </plugin>
+      <!-- nablarch-bom 未登録のため version を明示（SNAPSHOT リリース待ち） -->
+      <plugin>
+        <groupId>com.nablarch.framework</groupId>
+        <artifactId>nablarch-testing-converter</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>default-cli</id>
+            <goals><goal>convert</goal></goals>
+            <configuration>
+              <from>xls</from>
+              <to>yaml</to>
+              <input>${project.basedir}/src/test/java/com/nablarch/example</input>
+              <output>${project.basedir}/src/test/java/com/nablarch/example</output>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.eclipse.jetty.ee10</groupId>
