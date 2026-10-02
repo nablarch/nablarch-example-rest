@@ -120,8 +120,8 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 - [x] サンプリング比較結果を `checks/task-3.md` に記録する（数値セルの `N.0` 表現差を報告・ユーザー判断待ち）
 - [x] 変換したYAMLファイルをコミットする（Excelはまだ削除しない）
 - [x] self-check (OK/NG per completion criterion, record in checks/task-3.md)
-- [ ] QA expert review (Agent: general-purpose / Opus 4.8)
-- [ ] user review
+- [x] QA expert review (Agent: general-purpose / Opus 4.8)
+- [x] user review
 
 **Completion criteria**:
 
@@ -137,10 +137,10 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 
 **Steps**:
 
-- [ ] 変換対象となった Excel ファイルを削除する
-- [ ] 削除結果（残存Excelが0件であること）を `checks/task-4.md` に記録する
-- [ ] Excelファイル削除をコミットする
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-4.md)
+- [x] 変換対象となった Excel ファイルを削除する
+- [x] 削除結果（残存Excelが0件であること）を `checks/task-4.md` に記録する
+- [x] Excelファイル削除をコミットする
+- [x] self-check (OK/NG per completion criterion, record in checks/task-4.md)
 - [ ] QA expert review (Agent: general-purpose / Opus 4.8)
 - [ ] user review
 
@@ -174,12 +174,12 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 
 # Decisions
 
-- **数値セルの `N.0` 表現**（2026-10-02、Task #3）: `setUpDb.yaml` の数値カラムが `"1.0"` 等になるのは converter が数値セルを `cell.toString()` 相当で文字列化するため。web でも同事象を受容済み（H2 が INTEGER へ暗黙変換、テスト影響なし）。値は同一。最終判断はユーザーレビューに委ね、Task #5 の `mvn test` で妥当性を確認する。
+- **数値セルの `N.0` 表現**（2026-10-02、Task #3）: `setUpDb.yaml` の数値カラムが `"1.0"` 等になるのは converter が数値セルを `cell.toString()` 相当で文字列化するため。web でも同事象を受容済み（H2 が INTEGER へ暗黙変換、テスト影響なし）。値は同一。**ユーザーが受容を承認（2026-10-02）**。最終妥当性は Task #5 の `mvn test` で確認する。この判断は確定、再議しない。
 
 # State
 
 - **Status**: in progress
 - **Date**: 2026-10-02
-- **Last completed**: #3 Excel→YAML 変換 — 5 Excel→12 YAML。POI独立ダンプで全12ファイル各3件以上サンプリング一致を確認。`- {}` 空行は0件（web の requestParams 問題は非該当）。数値セルの `N.0` 表現差のみ報告（値同一）。self-check OK / QA OK（`N.0`は許容可能な表現差との見解）。ユーザー判断待ち。
-- **Next**: #3 の QA レビュー → ユーザーレビュー（`N.0` 表現の受容可否確認）→ #4 Excel削除
+- **Last completed**: #4 Excel削除 — 5 Excel（.xls×4 + .xlsx×1）を `git rm` で削除、残存0件。self-check OK。QA レビュー待ち。（#3 はユーザー承認済み、`N.0` 受容確定）
+- **Next**: #4 の QA レビュー → ユーザーレビュー → #5 Excelなしで `mvn test` 全パス確認
 - **Notes**: ブランチ `ntf-yaml-support` を `develop`（`f333474`）から作成。push は行わない方針（最後にユーザーがpush）。
