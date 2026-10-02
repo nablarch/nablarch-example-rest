@@ -160,10 +160,10 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 - [x] `mvn test` が BUILD SUCCESS になることを確認する
 - [x] テストログで YamlTestDataParser が実際に使われていることを確認する
 - [x] self-check (OK/NG per completion criterion, record in checks/task-5.md)
-- [ ] QA expert review (Agent: general-purpose / Opus 4.8)
+- [x] QA expert review (Agent: general-purpose / Opus 4.8)
 - [x] language expert review — N/A（本タスクはコード変更なし。config は Task #2 でレビュー済み）
 - [x] software-engineering expert review — N/A（同上）
-- [ ] user review
+- [x] user review
 
 **Completion criteria**:
 
@@ -178,8 +178,8 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 
 # State
 
-- **Status**: 全タスク完了（#5 ユーザーレビュー待ち）
+- **Status**: 完了（全5タスク user review 承認済み。2026-10-02）
 - **Date**: 2026-10-02
-- **Last completed**: #5 最終確認 — Excelなしで `mvn clean generate-resources` + `mvn test` が BUILD SUCCESS、79件全パス（ベースラインと同数）。YamlTestDataParser が override 適用され実際に YAML を解析していることをログで確認。self-check OK / QA OK。
-- **Next**: #5 のユーザーレビュー承認 → 完了。push は未実施（最後にユーザーが実施）。
+- **Last completed**: #5 最終確認 — Excelなしで `mvn clean generate-resources` + `mvn test` が BUILD SUCCESS、79件全パス（ベースラインと同数）。YamlTestDataParser が override 適用され実際に YAML を解析していることをログで確認。self-check OK / QA OK / user review 承認。
+- **Next**: なし（全タスク完了・Acceptance criteria 全達成）。残作業は push のみ（ユーザーが実施）。コミット: 7860eb5 / 586fc71 / ddae9f4 / 769351d / 5934149。
 - **Notes**: ブランチ `ntf-yaml-support` を `develop`（`f333474`）から作成。push は行わない方針（最後にユーザーがpush）。
