@@ -178,6 +178,6 @@ NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きで�
 
 - **Status**: in progress
 - **Date**: 2026-10-02
-- **Last completed**: #1 ベースライン確認 — `mvn test` 79件全PASS（Failures/Errors/Skipped: 0）。self-check OK / QA OK。ユーザーレビュー待ち。
-- **Next**: #1 のユーザーレビュー → #2 設定変更（pom.xml / unit-test.xml）
+- **Last completed**: #2 設定変更 — pom.xml に yaml（test依存）追加・converter をビルドプラグイン追加、unit-test.xml に yamlInterpreters/YamlTestDataParser 追加。dependency:resolve / help:describe 成功。self-check OK / QA OK / Language OK / SW-eng OK。ユーザーレビュー待ち。
+- **Next**: #2 のユーザーレビュー → #3 Excel→YAML 変換（`from=xls` で .xls×4 と .xlsx×1 の計5件が対象）
 - **Notes**: ブランチ `ntf-yaml-support` を `develop`（`f333474`）から作成。push は行わない方針（最後にユーザーがpush）。

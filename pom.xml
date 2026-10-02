@@ -219,6 +219,14 @@
       <scope>test</scope>
     </dependency>
 
+    <!-- YAML形式のNTFテストデータを読み込むためのパーサ。nablarch-bom 未登録のため version を明示（SNAPSHOT リリース待ち） -->
+    <dependency>
+      <groupId>com.nablarch.framework</groupId>
+      <artifactId>nablarch-testing-yaml</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>test</scope>
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -327,6 +335,21 @@
               <Target-Environment>${env.name}</Target-Environment>
             </manifestEntries>
           </archive>
+        </configuration>
+      </plugin>
+      <!-- NTFテストデータの XLS→YAML 変換ツール。テスト実行時には不要で、CLIで convert ゴールを
+           実行するときのみ使用する（test依存ではなくビルドプラグインとして宣言）。
+           例: mvn com.nablarch.framework:nablarch-testing-converter:1.0.0-SNAPSHOT:convert -->
+      <plugin>
+        <groupId>com.nablarch.framework</groupId>
+        <artifactId>nablarch-testing-converter</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <configuration>
+          <from>xls</from>
+          <to>yaml</to>
+          <input>${project.basedir}/src/test/java</input>
+          <output>${project.basedir}/src/test/java</output>
+          <overwrite>true</overwrite>
         </configuration>
       </plugin>
     </plugins>
