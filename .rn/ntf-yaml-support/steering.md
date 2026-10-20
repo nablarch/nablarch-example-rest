@@ -46,7 +46,10 @@ README（`README.md`）で確認した手順:
 
 ## Scripts
 
-（`.rn/ntf-yaml-support/scripts/` 配下。作成時に目的を記載する）
+`.rn/ntf-yaml-support/scripts/` 配下:
+
+- `XlsDump.java`（Task #3）… サンプリング比較用。Apache POI(3.8) で元 Excel の全セルを「行/列/セル型/生値」でダンプし、変換器と別経路で Excel を読む。実行: `java -cp <poi-3.8, poi-ooxml-3.8, poi-ooxml-schemas-3.8, xmlbeans-2.3.0, dom4j-1.1, stax-api-1.0.1> XlsDump.java <excel>`
+- `compare_listmap.py`（Task #3）… XlsDump の出力と YAML の `list_maps` を全行・全カラム比較し、サンプリング比較を補強する。実行: `python3 -I compare_listmap.py <dump.txt> <yaml_dir>`
 
 ## Tasks
 
@@ -112,15 +115,15 @@ README（`README.md`）で確認した手順:
 
 **Steps**:
 
-- [ ] 対象 Excel ファイルの所在を確認する
-- [ ] 同名 `.xls` / `.xlsx` の併存を確認する
-- [ ] converter README の手順に従い、全対象 Excel を YAML 変換する
-- [ ] 各 YAML について Excel とサンプリング比較する（各ファイル最低3件、3件未満は全件）
-- [ ] 比較結果を `checks/task-3.md` の Sampling Comparison に記録する
-- [ ] 変換した YAML をコミットする（Excel はまだ削除しない）
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-3.md)
-- [ ] QA expert review (Agent: general-purpose / Opus)
-- [ ] user review
+- [x] 対象 Excel ファイルの所在を確認する
+- [x] 同名 `.xls` / `.xlsx` の併存を確認する（併存なし）
+- [x] converter README の手順に従い、全対象 Excel を YAML 変換する（`Converted 5 file(s).` → YAML 12件）
+- [x] 各 YAML について Excel とサンプリング比較する（各ファイル最低3件、3件未満は全件。`scripts/XlsDump.java` + `scripts/compare_listmap.py` で form は全行一致）
+- [x] 比較結果を `checks/task-3.md` の Sampling Comparison に記録する
+- [x] 変換した YAML をコミットする（Excel はまだ削除しない）
+- [x] self-check (OK/NG per completion criterion, record in checks/task-3.md)
+- [x] QA expert review (Agent: general-purpose / Opus)
+- [ ] user review（全 task 完了後にまとめて実施）
 
 **Completion criteria**:
 
@@ -169,8 +172,12 @@ README（`README.md`）で確認した手順:
 - `mvn test` が BUILD SUCCESS で終了する（全テストパス、Excel ファイルなし）
 - テストログで YamlTestDataParser が実際に使われていることが確認できる
 
+## Decisions
+
+- **数値セルの `N.0` 表記**（Task #3）: `ProjectActionTest/setUpDb.yaml` の数値カラムが `"1.0"` 等になる。元セルは NUMERIC 型で、NTF の `PoiXlsReader` も `cell.toString()` で `"1.0"` を読むため、Excel 運用時の実行値と同一。差異ではないと判断（QA 同見解）。前回作業でもユーザーが受容済み。実行時の妥当性は Task #5 で確認。
+
 ## State
 
-- **Status**: Task #2 完了（user review は全 task 完了後にまとめて実施）
-- **Last completed**: #2 — pom.xml（yaml test 依存 / converter plugin）と unit-test.xml（YamlTestDataParser）を追加。self-check / QA / Language / SE すべて OK
-- **Next**: #3
+- **Status**: Task #3 完了（user review は全 task 完了後にまとめて実施）
+- **Last completed**: #3 — Excel 5件 → YAML 12件、サンプリング比較すべて一致、QA OK
+- **Next**: #4
