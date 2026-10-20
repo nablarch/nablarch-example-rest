@@ -85,17 +85,17 @@ README（`README.md`）で確認した手順:
 
 **Steps**:
 
-- [ ] `pom.xml` に `nablarch-testing-yaml:1.0.0-SNAPSHOT`（test scope）を追加する
-- [ ] `pom.xml` の `<build><plugins>` に `nablarch-testing-converter:1.0.0-SNAPSHOT` を追加する（`<configuration>` に from / to / input / output / overwrite）
-- [ ] 同期送信系（応答電文を実行中に読む）構成かを判定する
-- [ ] 判定結果に応じて `YamlTestDataParser` を配置する（`dateTimeInterpreter` → `compositeInterpreter`）
-- [ ] `mvn dependency:resolve` / `mvn help:describe` で yaml 依存と converter の `convert` ゴールが解決できることを確認する
-- [ ] 変更したファイルをコミットする
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-2.md)
-- [ ] QA expert review (Agent: general-purpose / Opus)
-- [ ] language expert review (Agent: general-purpose / Opus)
-- [ ] software-engineering expert review (Agent: general-purpose / Opus)
-- [ ] user review
+- [x] `pom.xml` に `nablarch-testing-yaml:1.0.0-SNAPSHOT`（test scope）を追加する
+- [x] `pom.xml` の `<build><plugins>` に `nablarch-testing-converter:1.0.0-SNAPSHOT` を追加する（`<configuration>` に from / to / input / output / overwrite）
+- [x] 同期送信系（応答電文を実行中に読む）構成かを判定する（判定: 非該当。src/test に response_* / sendSync なし、テスト用 *-boot.xml なし）
+- [x] 判定結果に応じて `YamlTestDataParser` を配置する（`src/test/resources/unit-test.xml` の `dbInfo` 定義直後）（`dateTimeInterpreter` → `compositeInterpreter`）
+- [x] `mvn dependency:resolve` / `mvn help:describe` で yaml 依存と converter の `convert` ゴールが解決できることを確認する
+- [x] 変更したファイルをコミットする
+- [x] self-check (OK/NG per completion criterion, record in checks/task-2.md)
+- [x] QA expert review (Agent: general-purpose / Opus)
+- [x] language expert review (Agent: general-purpose / Opus)
+- [x] software-engineering expert review (Agent: general-purpose / Opus)
+- [ ] user review（全 task 完了後にまとめて実施）
 
 **Completion criteria**:
 
@@ -171,6 +171,6 @@ README（`README.md`）で確認した手順:
 
 ## State
 
-- **Status**: Task #1 完了（user review は全 task 完了後にまとめて実施）
-- **Last completed**: #1 — ベースラインコミット `d7b6ee1`（develop 一致）、79件全パス
-- **Next**: #2
+- **Status**: Task #2 完了（user review は全 task 完了後にまとめて実施）
+- **Last completed**: #2 — pom.xml（yaml test 依存 / converter plugin）と unit-test.xml（YamlTestDataParser）を追加。self-check / QA / Language / SE すべて OK
+- **Next**: #3
