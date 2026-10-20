@@ -4,7 +4,7 @@
 
 - 目的: NTF（Nablarch Testing Framework）のAI対応として、AIが読み書きできないバイナリ形式のExcelテストデータをYAML形式に移行する（背景資料: https://github.com/Fintan-contents/nablarch-system-development-guide/pull/211）。
 - 対象プロジェクト: `nablarch-example-rest`
-- 指示書: `/home/k10949/instructions/ntf-yaml-support-instructions_rest_V1.6.md`
+- 指示書: `.rn/ntf-yaml-support/ntf-yaml-support-instructions_rest_V1.6.md`（原本: `/home/k10949/instructions/ntf-yaml-support-instructions_rest_V1.6.md`）
 - 再実施: ブランチには過去の移行コミット（`7860eb5`〜`f034958`）が既に積まれているが、指示書に従い履歴を維持したまま、その上にベースラインコミット（develop 一致ツリー）→ task-1〜5 を新規に積み上げて再実施する。
 - Acceptance criteria（要約）:
   - 既存 `ntf-yaml-support` ブランチ上で履歴を維持し作業（新規ブランチ作成・rebase・amend・hard reset なし）
