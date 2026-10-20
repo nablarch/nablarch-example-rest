@@ -159,13 +159,13 @@ README（`README.md`）で確認した手順:
 
 **Steps**:
 
-- [ ] `mvn test` が BUILD SUCCESS になることを確認する
-- [ ] テストログで YamlTestDataParser が実際に使われていることを確認する
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-5.md)
-- [ ] QA expert review (Agent: general-purpose / Opus)
-- [ ] language expert review (Agent: general-purpose / Opus)
-- [ ] software-engineering expert review (Agent: general-purpose / Opus)
-- [ ] user review
+- [x] `mvn test` が BUILD SUCCESS になることを確認する（79件全パス、ベースラインと同数）
+- [x] テストログで YamlTestDataParser が実際に使われていることを確認する（override WARN / YamlTestDataParser ロガー出力）
+- [x] self-check (OK/NG per completion criterion, record in checks/task-5.md)
+- [x] QA expert review (Agent: general-purpose / Opus)
+- [x] language expert review (Agent: general-purpose / Opus)
+- [x] software-engineering expert review (Agent: general-purpose / Opus)
+- [ ] user review（全 task 完了後にまとめて実施）
 
 **Completion criteria**:
 
@@ -178,6 +178,7 @@ README（`README.md`）で確認した手順:
 
 ## State
 
-- **Status**: Task #4 完了（user review は全 task 完了後にまとめて実施）
-- **Last completed**: #4 — 変換済み Excel 5件を削除（残存 Excel 0件）、QA OK
-- **Next**: #5
+- **Status**: 全 task（#1〜#5）完了。user review 待ち（全 task 分をまとめて実施）
+- **Last completed**: #5 — Excel なしで `mvn clean generate-resources` + `mvn test` が BUILD SUCCESS、79件全パス（ベースラインと同数）。YamlTestDataParser の使用をログで確認。self-check / QA / Language / SE すべて OK
+- **Commits**: `d7b6ee1`（ベースライン）/ `e9a1cc3`（#1）/ `bb1870e`（#2）/ `470ce4a`（#3）/ `070eb49`（#4）/ #5 のコミット
+- **Next**: user review。push はユーザーが実施
