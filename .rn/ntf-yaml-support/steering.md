@@ -139,12 +139,12 @@ README（`README.md`）で確認した手順:
 
 **Steps**:
 
-- [ ] 変換対象となった Excel ファイルを削除する
-- [ ] 削除結果（残存 Excel 0件）を `checks/task-4.md` に記録する
-- [ ] Excel ファイル削除をコミットする
-- [ ] self-check (OK/NG per completion criterion, record in checks/task-4.md)
-- [ ] QA expert review (Agent: general-purpose / Opus)
-- [ ] user review
+- [x] 変換対象となった Excel ファイルを削除する
+- [x] 削除結果（残存 Excel 0件）を `checks/task-4.md` に記録する
+- [x] Excel ファイル削除をコミットする
+- [x] self-check (OK/NG per completion criterion, record in checks/task-4.md)
+- [x] QA expert review (Agent: general-purpose / Opus)
+- [ ] user review（全 task 完了後にまとめて実施）
 
 **Completion criteria**:
 
@@ -178,6 +178,6 @@ README（`README.md`）で確認した手順:
 
 ## State
 
-- **Status**: Task #3 完了（user review は全 task 完了後にまとめて実施）
-- **Last completed**: #3 — Excel 5件 → YAML 12件、サンプリング比較すべて一致、QA OK
-- **Next**: #4
+- **Status**: Task #4 完了（user review は全 task 完了後にまとめて実施）
+- **Last completed**: #4 — 変換済み Excel 5件を削除（残存 Excel 0件）、QA OK
+- **Next**: #5
