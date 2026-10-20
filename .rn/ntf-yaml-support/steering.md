@@ -72,7 +72,7 @@ README（`README.md`）で確認した手順:
 - [x] 変更ファイル（check ファイルおよび steering.md）をコミットする
 - [x] self-check (OK/NG per completion criterion, record in checks/task-1.md)
 - [x] QA expert review (Agent: general-purpose / Opus)
-- [ ] user review（全 task 完了後にまとめて実施）
+- [x] user review（全 task 完了後にまとめて実施・承認済み）
 
 **Completion criteria**:
 
@@ -98,7 +98,7 @@ README（`README.md`）で確認した手順:
 - [x] QA expert review (Agent: general-purpose / Opus)
 - [x] language expert review (Agent: general-purpose / Opus)
 - [x] software-engineering expert review (Agent: general-purpose / Opus)
-- [ ] user review（全 task 完了後にまとめて実施）
+- [x] user review（全 task 完了後にまとめて実施・承認済み）
 
 **Completion criteria**:
 
@@ -123,7 +123,7 @@ README（`README.md`）で確認した手順:
 - [x] 変換した YAML をコミットする（Excel はまだ削除しない）
 - [x] self-check (OK/NG per completion criterion, record in checks/task-3.md)
 - [x] QA expert review (Agent: general-purpose / Opus)
-- [ ] user review（全 task 完了後にまとめて実施）
+- [x] user review（全 task 完了後にまとめて実施・承認済み）
 
 **Completion criteria**:
 
@@ -144,7 +144,7 @@ README（`README.md`）で確認した手順:
 - [x] Excel ファイル削除をコミットする
 - [x] self-check (OK/NG per completion criterion, record in checks/task-4.md)
 - [x] QA expert review (Agent: general-purpose / Opus)
-- [ ] user review（全 task 完了後にまとめて実施）
+- [x] user review（全 task 完了後にまとめて実施・承認済み）
 
 **Completion criteria**:
 
@@ -165,7 +165,7 @@ README（`README.md`）で確認した手順:
 - [x] QA expert review (Agent: general-purpose / Opus)
 - [x] language expert review (Agent: general-purpose / Opus)
 - [x] software-engineering expert review (Agent: general-purpose / Opus)
-- [ ] user review（全 task 完了後にまとめて実施）
+- [x] user review（全 task 完了後にまとめて実施・承認済み）
 
 **Completion criteria**:
 
@@ -174,11 +174,11 @@ README（`README.md`）で確認した手順:
 
 ## Decisions
 
-- **数値セルの `N.0` 表記**（Task #3）: `ProjectActionTest/setUpDb.yaml` の数値カラムが `"1.0"` 等になる。元セルは NUMERIC 型で、NTF の `PoiXlsReader` も `cell.toString()` で `"1.0"` を読むため、Excel 運用時の実行値と同一。差異ではないと判断（QA 同見解）。前回作業でもユーザーが受容済み。実行時の妥当性は Task #5 で確認。
+- **数値セルの `N.0` 表記**（Task #3、user review で承認済み）: `ProjectActionTest/setUpDb.yaml` の数値カラムが `"1.0"` 等になる。元セルは NUMERIC 型で、NTF の `PoiXlsReader` も `cell.toString()` で `"1.0"` を読むため、Excel 運用時の実行値と同一。差異ではないと判断（QA 同見解）。前回作業でもユーザーが受容済み。実行時の妥当性は Task #5 で確認。
 
 ## State
 
-- **Status**: 全 task（#1〜#5）完了。user review 待ち（全 task 分をまとめて実施）
-- **Last completed**: #5 — Excel なしで `mvn clean generate-resources` + `mvn test` が BUILD SUCCESS、79件全パス（ベースラインと同数）。YamlTestDataParser の使用をログで確認。self-check / QA / Language / SE すべて OK
-- **Commits**: `d7b6ee1`（ベースライン）/ `e9a1cc3`（#1）/ `bb1870e`（#2）/ `470ce4a`（#3）/ `070eb49`（#4）/ #5 のコミット
-- **Next**: user review。push はユーザーが実施
+- **Status**: 完了（全 task #1〜#5 の user review 承認済み）
+- **Last completed**: #5 — Excel なしで 79件全パス。全 task の self-check / QA / Language / SE すべて OK、user review 承認
+- **Commits**: `d7b6ee1`（ベースライン）/ `e9a1cc3`（#1）/ `bb1870e`（#2）/ `470ce4a`（#3）/ `070eb49`（#4）/ `95f4771`（#5）
+- **Next**: なし。push はユーザーが実施

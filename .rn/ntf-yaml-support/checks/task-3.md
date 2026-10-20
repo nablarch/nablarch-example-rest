@@ -60,4 +60,5 @@ N/A — no code changes in this task.
 - QA: OK
 - Language expert: N/A
 - Software-engineering expert: N/A
-- Ready for user review: Yes（N.0 表記の扱いは NTF 読み込み値と同一のため一致と判断。user review 時に確認を依頼）
+- Ready for user review: Yes（N.0 表記の扱いは NTF 読み込み値と同一のため一致と判断）
+- User review: Approved（N.0 表記の判断を含め承認）
