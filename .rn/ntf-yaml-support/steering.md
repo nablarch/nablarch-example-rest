@@ -30,7 +30,8 @@ README（`README.md`）で確認した手順:
 - テスト実行: `mvn test`（README にテスト手順の記載はないため Maven 標準の `test` フェーズを使用）
 - 本作業での実行コマンド: `LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 mvn clean generate-resources` → `LANG=ja_JP.UTF-8 LC_ALL=ja_JP.UTF-8 mvn test`
   - **ロケール**: メッセージ解決に日本語ロケールが必要（`C.UTF-8` だとテストが失敗する。前回作業で判明）。
-- 環境: OpenJDK 21.0.2 / Apache Maven 3.9.16
+- 実行環境: README 記載は Java 17 / Maven 3.9.9 以降。本作業は Apache Maven 3.9.16 / Maven 実行時の Java は Eclipse Temurin 17.0.20（`~/.mavenrc` で `JAVA_HOME` を temurin-17 に設定。`mvn -v` の `Java version` で確認）。シェルの `java` は mise 設定の OpenJDK 21.0.2 だが、ビルド・テスト・変換には使われない。
+- 補足: README 記載どおり `.mvn/jvm.config`（`--add-opens java.base/java.lang=ALL-UNNAMED`）が `develop` に存在し、gsp プラグイン用の JVM オプションとして適用される。
 - 変換ツール: `/home/k10949/workspace/nablarch-testing-converter/README.md` の手順に従う
 
 ## Rules（指示書より抜粋）
